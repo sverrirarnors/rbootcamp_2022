@@ -1,1 +1,3 @@
-# rbootcamp_2021
+## Hi and welcome to the R Bootcamp 2021 (MACIS & ISTP)!
+
+This repository contains presentations, exercises, and the corresponding solutions to make programming with R easier for people with no previous knowledge. The presentations are prepared for a 1.5-day boot camp for incoming students of the Master in Comparative and International Studies (see [MACIS](https://macis.gess.ethz.ch)) and the Master in Science, Technology, and Policy (see [MSc ETH STP](https://istp.ethz.ch/education/master.html)), respectively. In the spirit of reproducibility and the open-source movement, we decided to make this repository publicly available to all those who want to acquire basic knowledge of R themselves or teach it to others as instructors. 
