@@ -24,20 +24,35 @@ library(tidyverse)
 ## Overall schedule
 
 - Admin
+
 - Meet the instructors
+
 - Day 1: The basics of R (Studio)
+
 - Day 2: Data wrangling and visualizations
+
 - Social event with GessWho!
 
 ---
 
-## Admin
+
+## First things first
 
 - Please (properly) wear masks at all time
 
-- The lessons are fairly packed but everything is available online (LINK)
+- The lessons are fairly packed but don't worry: Everything is available [online](https://github.com/bonschorno/rbootcamp_2021)
 
-- Feel free to ask questions at any time!
+- Feel free to ask questions at any time
+
+- Shoutout to Charles Lanfear (@clanfear) for providing the slides
+
+- Don't hesitate the share the slides and exercises as well!
+
+<br>
+
+**The guiding principle of this course:**
+
+> Tell me and I forget <br> teach me and I remember, <br> involve me and I learn.
 
 ---
 
@@ -47,9 +62,9 @@ class: inverse, center, middle
 
 ---
 
-class: center, middle
-
 ## Today's schedule
+
+<br>
 
 |Time       |Content                           |
 |-----------|----------------------------------|
@@ -109,7 +124,7 @@ plot_languages
 
 ---
 
-## Program
+## Equal parts STP/MACIS students
 
 ```{r, echo=FALSE, fig.width=10}
 # library
@@ -138,12 +153,14 @@ aes(area = value, fill = group,label = group)) +
 
 # R or Python?
 
-- The primary objective of R is (was) data analysis and statistics. The primary objective of Python is (was) deployment and production. 
+- The primary objective of R is/was data analysis and statistics. The primary objective of Python is/was deployment and production. 
 
-BUT: 
+**BUT:**
 
 - What language do your colleagues use?
+
 - Who is working with the data?
+
 - What tasks are you performing?
 
 ---
@@ -174,9 +191,6 @@ If one already knows Stata or similar software, why use R?
 * R is a *language* so it can do *everything*.<sup>1</sup>
 
 .footnote[[1] Including generate these slides (using RMarkdown)!]
---
-
-* R is similar to other programming languages.
 
 ---
 
@@ -321,6 +335,3 @@ setwd()
 3. Loads the project into RStudio and display its name in the Projects toolbar 
 
 This is super useful when collaborating on different operating systems!
-
----
-

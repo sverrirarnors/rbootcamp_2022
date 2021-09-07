@@ -1,0 +1,268 @@
+---
+title: "Objects, dataframes, formats"
+author: "Felix Wüthrich"
+date: "14.09.2021"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      always_allow_html: true
+
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.retina = 3, message = FALSE) #rendering sharp plots / not showing messages
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_light(base_color = "#081c15")
+#class: inverse, center, middle
+library(tidyverse)
+```
+
+# Creating Objects
+
+R stores *everything* as an **object**, including data, functions, models, and output.
+
+--
+
+Creating an object can be done using the **assignment operator**: `<-` 
+--
+
+```{r Objects 1}
+new.object <- 144
+```
+
+--
+
+**Operators** like `<-` are functions that look like symbols but typically sit between their arguments 
+(e.g. numbers or objects) instead of having them inside `()` like in `sqrt(x)`<sup>1</sup>. 
+
+Technically, you can also use `=` as an assignment operator (like in Python). However, this is only possible at the top level.
+
+---
+
+# Example
+
+```{r}
+mean(x = 1:5)
+```
+
+```{r, error=TRUE}
+x
+```
+
+```{r}
+mean(x <- 1:5)
+```
+
+```{r}
+x
+```
+
+So, stick to `<-` when working in R. 
+
+
+---
+
+# Calling Objects
+
+You can display or "call" an object simply by using its name.
+
+```{r Objects 2}
+new.object
+```
+
+--
+
+Object names can contain `_` and `.` in them, but cannot *begin* with numbers. Try
+to be consistent in naming objects. RStudio auto-complete means *long names are better 
+than vague ones*! 
+
+Put differently:
+
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">I promise you that the number of characters you save by randomly removing letters from variable names is far fewer than the number of characters you’ll type in vain misremembering those abbreviations</p>&mdash; Emily Riederer (@EmilyRiederer) <a href="https://twitter.com/EmilyRiederer/status/1432800401460453381?ref_src=twsrc%5Etfw">August 31, 2021</a></blockquote>
+
+---
+
+# Using Objects
+
+An object's **name** represents the information stored in that **object**, so you can treat the object's name
+as if it were the values stored inside.
+--
+
+```{r Objects 3}
+new.object + 10
+new.object + new.object
+sqrt(new.object)
+```
+
+---
+
+# Creating Vectors
+
+A **vector** is a series of **elements**, such as numbers. 
+
+--
+
+You can create a vector and store it as an object in the same way. To do this, use the
+function `c()` which stands for "combine" or "concatenate".
+--
+
+```{r Vectors 1}
+new.object <- c(4, 9, 16, 25, 36)
+new.object
+```
+
+--
+
+If you name an object the same name as an existing object, *it will overwrite it*.
+
+--
+
+You can provide a vector as an argument for many functions.
+--
+
+```{r Vectors 2}
+sqrt(new.object)
+```
+
+---
+
+# Character Vectors
+
+We often work with data that are categorical. To create a vector of text elements—**strings** in programming terms—we must place the text in quotes:
+
+```{r}
+string.vector <- c("Atlantic", "Pacific", "Arctic")
+string.vector
+```
+
+--
+
+Categorical data can also be stored as a **factor**, which has an underlying numeric representation. Models will convert factors to dummies.<sup>1</sup>
+
+```{r}
+factor.vector <- factor(string.vector)
+factor.vector
+```
+
+.footnote[[1] Factors have **levels** which you can use to set a reference category in models using `relevel()`.]
+
+---
+# Saving and Loading Objects
+
+You can save an R object on your computer as a file to open later:
+```{r}
+save(new.object, file="new_object.RData")
+```
+
+--
+
+You can open saved files in R as well:
+```{r}
+load("new_object.RData")
+```
+
+---
+
+# More Complex Objects
+
+The same principles shown with vectors can be used with more complex objects like **matrices**, **arrays**, **lists**, and **dataframes** (lists which look like matrices but can hold multiple data types at once).
+
+Most data sets you will work with will be read into R and stored as a **dataframe**, so the remainder of this workshop will mainly focus on using these objects.
+
+---
+class: inverse, center, middle
+
+
+# Loading Dataframes
+
+---
+
+# Delimited Text Files
+
+The easiest way to work with external data—that isn't in R format—is for it to be stored in a *delimited* text file, e.g. comma-separated values (**.csv**) or tab-separated values (**.tsv**). 
+
+--
+
+R has a variety of built-in functions for importing data stored in text files, like `read.table()` and `read.csv()`.
+
+
+By default, these functions will read *character* (string) columns in as a *factor*.
+
+To disable this, use the argument `stringsAsFactors = FALSE`, like so:
+
+```{r, eval=FALSE}
+new_df <- read.csv("some_spreadsheet.csv", stringsAsFactors = FALSE)
+```
+
+---
+# Data from Other Software
+
+Working with **Stata**, **SPSS**, or **SAS** users? You can use a **package** to bring in their saved data files:
+ 
+* `foreign`
+    + Part of base R
+    + Functions: `read.spss()`, `read.dta()`, `read.xport()`
+    + Less complex but sometimes loses some metadata
+* `haven`
+    + Part of the `tidyverse` family
+    + Functions: `read_spss()`, `read_dta()`, `read_sas()`
+    + Keeps metadata like variable labels
+
+
+For less common formats, Google it. I've yet to encounter a data format without an 
+R package to handle it (or at least a clever hack).
+
+If you encounter an ambiguous file extension (e.g. `.dat`), try opening it with
+a good text editor first (e.g. Atom, Sublime); there's a good chance it is actually raw text
+with a delimiter or fixed format that R can handle!
+
+---
+
+# Installing Packages
+
+But what are packages? 
+
+--
+
+Packages contain functions (and sometimes data) created by the community. The real power of R is found in add-on packages!
+
+--
+
+For the remainder of today's course, we will work with data from the `gapminder` package.
+
+These data are a panel data describing 142 countries observed every 5 years from 1952 to 2007.
+
+--
+
+We can install `gapminder` from the Comprehensive R Archive Network (CRAN):
+
+```{r, eval=FALSE}
+install.packages("gapminder")
+```
+
+You only need to install a package **once** for any given version of R. You need to reinstall packages after upgrading R.
+
+---
+
+# Loading Packages
+
+To load a package, use `library()`:
+
+```{r}
+library(gapminder)
+```
+
+Once a package is loaded, you can call on functions or data inside it.
+
+```{r}
+data(gapminder) # Places data in your global environment
+head(gapminder) # Displays first six elements of an object
+```

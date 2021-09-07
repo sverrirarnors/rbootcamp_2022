@@ -1,0 +1,336 @@
+---
+title: "Indexing and basic plots"
+author: "Felix Wüthrich"
+date: "14.09.2021"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      always_allow_html: true
+
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.retina = 3, message = FALSE) #rendering sharp plots / not showing messages
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_light(base_color = "#081c15")
+#class: inverse, center, middle
+library(tidyverse)
+library(gapminder)
+```
+
+# Indices and Dimensions
+
+Dataframes have *2* dimensions: **rows** and **columns**. Square brackets allow us to numerically **subset** in the format of `object[row, column]`. Leaving the row or column place empty selects *all* elements of that dimension.
+
+
+```{r}
+gapminder[1,] # First row
+```
+```{r}
+gapminder[,1] # First column
+```
+
+---
+
+```{r}
+gapminder[c(1,2,3,4,5), c(3,4)] # First five rows, third and fourth column
+```
+
+```{r}
+gapminder[1:5, 3:4] # First five rows, third and fourth column
+```
+
+
+---
+
+# Dataframes and Names
+
+Columns in dataframes can also be accessed using their names with the `$` extract operator. This will return the column as a vector:
+
+```{r}
+gapminder$gdpPercap[1:10]
+```
+
+--
+
+Note here I *also* used brackets to select just the first 10 elements of that column.
+
+You can mix subsetting formats! In this case I provided only a single value (no column index) because **vectors** have *only one dimension* (length).
+
+If you try to subset something and get a warning about "incorrect number of dimensions", check your subsetting!
+
+---
+
+# Indexing by Expression
+
+We can also index using expressions—logical *tests*.
+
+```{r}
+gapminder[gapminder$year==1952, ]
+```
+
+---
+
+# How Expressions Work
+
+What does `gapminder$year==1952` actually do? 
+
+--
+
+```{r}
+head(gapminder$year==1952, 50) # display first 50 elements
+```
+
+--
+
+It returns a vector of `TRUE` or `FALSE` values.
+
+When used with the subset operator (`[]`), elements for which a `TRUE` is given are returned while those corresponding to `FALSE` are dropped.
+
+---
+
+# Logical Operators
+
+We used `==` for testing "equals": `gapminder$year==1952`.
+
+--
+
+There are many other [logical operators](http://www.statmethods.net/management/operators.html):
+
+--
+
+* `!=`: not equal to
+--
+
+* `>`, `>=`, `<`, `<=`: less than, less than or equal to, etc.
+--
+
+* `%in%`: used with checking equal to one of several values
+
+--
+
+Or we can combine multiple logical conditions:
+
+* `&`: both conditions need to hold (AND)
+--
+
+* `|`: at least one condition needs to hold (OR)
+--
+
+* `!`: inverts a logical condition (`TRUE` becomes `FALSE`, `FALSE` becomes `TRUE`)
+
+--
+
+Logical operators are one of the foundations of programming. You should experiment with these to become familiar with how they work!
+
+---
+
+# Sidenote: Missing Values
+
+Missing values are coded as `NA` entries without quotes:
+
+```{r}
+vector_w_missing <- c(1, 2, NA, 4, 5, 6, NA)
+```
+
+Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you remove them manually or use the extra argument `na.rm = TRUE` in some functions:
+
+```{r}
+mean(vector_w_missing)
+mean(vector_w_missing, na.rm=TRUE)
+```
+
+---
+# Finding Missing Values
+
+**WARNING:** You can't test for missing values by seeing if they "equal" (`==`) `NA`:
+
+```{r}
+vector_w_missing == NA
+```
+
+But you can use the `is.na()` function:
+
+```{r}
+is.na(vector_w_missing)
+```
+
+We can use subsetting to get the equivalent of `na.rm=TRUE`:
+
+```{r}
+mean(vector_w_missing[!is.na(vector_w_missing)]) #<<
+```
+
+.pull-right[
+.footnote[
+`!` *reverses* a logical condition. Read the above as "subset *not* `NA`"
+]
+]
+
+---
+
+# Multiple Conditions Example
+
+Let's say we want observations from Oman after 1980 and through 2000.
+
+--
+
+```{r}
+gapminder[gapminder$country == "Oman" &
+          gapminder$year > 1980 &
+          gapminder$year <= 2000, ]
+```
+
+.footnote[
+Note we always need to use the full object name in each subseting argument, rather than just `country == "Oman"` alone. You can subset one object using another this way (e.g. `gapminder[other_data$some_variable == x, ]`).
+]
+
+---
+
+# Saving a Subset
+
+If we think a particular subset will be used repeatedly, we can save it and give it a name like any other object:
+
+```{r}
+China <- gapminder[gapminder$country == "China", ]
+head(China, 4)
+```
+
+---
+# Another Operator: `%in%`
+
+A common thing we may want to do is subset rows to things in some *set*.
+
+We can use `%in%` like `==` but it matches *any element* in the vector on its right. 
+
+```{r}
+former_yugoslavia <- c("Bosnia and Herzegovina", "Croatia", 
+              "Macedonia", "Montenegro", "Serbia", "Slovenia")
+yugoslavia <- gapminder[gapminder$country %in% former_yugoslavia, ]
+head(yugoslavia)
+```
+
+---
+## Create New Columns
+
+We can create new columns (variables) in a dataframe using the same subsetting functions.
+
+
+
+```{r}
+yugoslavia$pop_million <- yugoslavia$pop / 1000000
+yugoslavia$life_exp_past_40 <- yugoslavia$lifeExp - 40
+head(yugoslavia)
+```
+
+.footnote[
+Note one of our new variables is not displayed due to limited width.
+]
+
+---
+# `ifelse()`
+
+
+A common function used in general in R programming is `ifelse()`. This returns a value depending on logical tests.
+
+```{r, eval=FALSE}
+ifelse(test = x==y, yes = 1, no = 2)
+```
+
+Output from `ifelse()`:
+* `ifelse()` returns the value assigned to `yes` (in this case, `1`) if `x==y` is `TRUE`.
+
+* `ifelse()` returns `no` (in this case, `2`) if `x==y` is `FALSE`.
+
+* `ifelse()` returns `NA` if `x==y` is neither `TRUE` nor `FALSE`.
+
+Note we can omit explicitly typing function arguments like `test = ` if we enter them in the order of arguments shown in the function's help page.
+
+---
+# `ifelse()` Example
+
+.small[
+```{r}
+yugoslavia$short_country <-  ifelse(yugoslavia$country == "Bosnia and Herzegovina",
+                                    "B and H",
+                                    as.character(yugoslavia$country))
+yugoslavia[yugoslavia$year==1952, c(1,9)] # Selecting just columns 1 and 9
+```
+]
+
+Read this as "For each row, if `country` equals `"Bosnia and Herzegovina"`, make `short_country` equal to `"B and H"`, otherwise make it equal to that row's original value of `country` (as character, rather than factor, data)."
+
+This is a simple way to change some values but not others!
+
+---
+
+class: middle, inverse, center
+
+## Basic Plots
+
+---
+
+# Histograms
+
+We can use the `hist()` function to generate a histogram of a vector:
+
+```{r, eval = FALSE}
+hist(gapminder$lifeExp,
+     xlab = "Life Expectancy (years)", #<<
+     main = "Observed Life Expectancies of Countries") #<<
+```
+
+- `xlab =` is used to set the label of the x-axis of a plot.
+- `main = ` is used to set the title of a plot.
+- Use `?hist` to see additional options available for customizing a histogram.
+
+---
+
+class: center
+
+```{r, echo=FALSE}
+hist(gapminder$lifeExp,
+     xlab = "Life Expectancy (years)", #<<
+     main = "Observed Life Expectancies of Countries") #<<
+```
+
+
+---
+
+# Scatter Plots
+
+```{r, eval=FALSE}
+plot(lifeExp ~ gdpPercap, data = gapminder, #<<
+     xlab = "ln(GDP per Capita)",
+     ylab = "Life Expectancy (years)",
+     main = "Life Expectancy and log GDP per Capita",
+     pch = 16, log="x") # log="x" sets x axis to log scale!
+abline(h = mean(gapminder$lifeExp), col = "firebrick") #<<
+abline(v = mean(gapminder$gdpPercap), col = "cornflowerblue") #<<
+```
+
+Note that `lifeExp ~ gdpPercap` is a **formula** of the type `y ~ x`. The first element (`lifeExp`) gets plotted on the y-axis and the second (`gdpPercap`) goes on the x-axis.
+
+The `abline()` calls place horizontal (`h =`) or vertical (`v =`) lines at the means of the variables used in the plot. 
+
+---
+
+class: center
+
+```{r, echo=FALSE}
+plot(lifeExp ~ gdpPercap, data = gapminder, #<<
+     xlab = "ln(GDP per Capita)",
+     ylab = "Life Expectancy (years)",
+     main = "Life Expectancy and log GDP per Capita",
+     pch = 16, log="x") # log="x" sets x axis to log scale!
+abline(h = mean(gapminder$lifeExp), col = "firebrick") #<<
+abline(v = mean(gapminder$gdpPercap), col = "cornflowerblue") #<<
+```

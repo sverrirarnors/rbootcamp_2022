@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Objects, dataframes, formats</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Felix Wüthrich" />
+    <script src="obj_fn_scripts_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Objects, dataframes, formats
+### Felix Wüthrich
+### 14.09.2021
+
+---
+
+
+
+
+
+
+# Creating Objects
+
+R stores *everything* as an **object**, including data, functions, models, and output.
+
+--
+
+Creating an object can be done using the **assignment operator**: `&lt;-` 
+--
+
+
+```r
+new.object &lt;- 144
+```
+
+--
+
+**Operators** like `&lt;-` are functions that look like symbols but typically sit between their arguments 
+(e.g. numbers or objects) instead of having them inside `()` like in `sqrt(x)`&lt;sup&gt;1&lt;/sup&gt;. 
+
+Technically, you can also use `=` as an assignment operator (like in Python). However, this is only possible at the top level.
+
+---
+
+# Example
+
+
+```r
+mean(x = 1:5)
+```
+
+```
+## [1] 3
+```
+
+
+```r
+x
+```
+
+```
+## Error in eval(expr, envir, enclos): object 'x' not found
+```
+
+
+```r
+mean(x &lt;- 1:5)
+```
+
+```
+## [1] 3
+```
+
+
+```r
+x
+```
+
+```
+## [1] 1 2 3 4 5
+```
+
+So, stick to `&lt;-` when working in R. 
+
+
+---
+
+# Calling Objects
+
+You can display or "call" an object simply by using its name.
+
+
+```r
+new.object
+```
+
+```
+## [1] 144
+```
+
+--
+
+Object names can contain `_` and `.` in them, but cannot *begin* with numbers. Try
+to be consistent in naming objects. RStudio auto-complete means *long names are better 
+than vague ones*! 
+
+Put differently:
+
+&lt;blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"&gt;&lt;p lang="en" dir="ltr"&gt;I promise you that the number of characters you save by randomly removing letters from variable names is far fewer than the number of characters you’ll type in vain misremembering those abbreviations&lt;/p&gt;&amp;mdash; Emily Riederer (@EmilyRiederer) &lt;a href="https://twitter.com/EmilyRiederer/status/1432800401460453381?ref_src=twsrc%5Etfw"&gt;August 31, 2021&lt;/a&gt;&lt;/blockquote&gt;
+
+---
+
+# Using Objects
+
+An object's **name** represents the information stored in that **object**, so you can treat the object's name
+as if it were the values stored inside.
+--
+
+
+```r
+new.object + 10
+```
+
+```
+## [1] 154
+```
+
+```r
+new.object + new.object
+```
+
+```
+## [1] 288
+```
+
+```r
+sqrt(new.object)
+```
+
+```
+## [1] 12
+```
+
+---
+
+# Creating Vectors
+
+A **vector** is a series of **elements**, such as numbers. 
+
+--
+
+You can create a vector and store it as an object in the same way. To do this, use the
+function `c()` which stands for "combine" or "concatenate".
+--
+
+
+```r
+new.object &lt;- c(4, 9, 16, 25, 36)
+new.object
+```
+
+```
+## [1]  4  9 16 25 36
+```
+
+--
+
+If you name an object the same name as an existing object, *it will overwrite it*.
+
+--
+
+You can provide a vector as an argument for many functions.
+--
+
+
+```r
+sqrt(new.object)
+```
+
+```
+## [1] 2 3 4 5 6
+```
+
+---
+
+# Character Vectors
+
+We often work with data that are categorical. To create a vector of text elements—**strings** in programming terms—we must place the text in quotes:
+
+
+```r
+string.vector &lt;- c("Atlantic", "Pacific", "Arctic")
+string.vector
+```
+
+```
+## [1] "Atlantic" "Pacific"  "Arctic"
+```
+
+--
+
+Categorical data can also be stored as a **factor**, which has an underlying numeric representation. Models will convert factors to dummies.&lt;sup&gt;1&lt;/sup&gt;
+
+
+```r
+factor.vector &lt;- factor(string.vector)
+factor.vector
+```
+
+```
+## [1] Atlantic Pacific  Arctic  
+## Levels: Arctic Atlantic Pacific
+```
+
+.footnote[[1] Factors have **levels** which you can use to set a reference category in models using `relevel()`.]
+
+---
+# Saving and Loading Objects
+
+You can save an R object on your computer as a file to open later:
+
+```r
+save(new.object, file="new_object.RData")
+```
+
+--
+
+You can open saved files in R as well:
+
+```r
+load("new_object.RData")
+```
+
+---
+
+# More Complex Objects
+
+The same principles shown with vectors can be used with more complex objects like **matrices**, **arrays**, **lists**, and **dataframes** (lists which look like matrices but can hold multiple data types at once).
+
+Most data sets you will work with will be read into R and stored as a **dataframe**, so the remainder of this workshop will mainly focus on using these objects.
+
+---
+class: inverse, center, middle
+
+
+# Loading Dataframes
+
+---
+
+# Delimited Text Files
+
+The easiest way to work with external data—that isn't in R format—is for it to be stored in a *delimited* text file, e.g. comma-separated values (**.csv**) or tab-separated values (**.tsv**). 
+
+--
+
+R has a variety of built-in functions for importing data stored in text files, like `read.table()` and `read.csv()`.
+
+
+By default, these functions will read *character* (string) columns in as a *factor*.
+
+To disable this, use the argument `stringsAsFactors = FALSE`, like so:
+
+
+```r
+new_df &lt;- read.csv("some_spreadsheet.csv", stringsAsFactors = FALSE)
+```
+
+---
+# Data from Other Software
+
+Working with **Stata**, **SPSS**, or **SAS** users? You can use a **package** to bring in their saved data files:
+ 
+* `foreign`
+    + Part of base R
+    + Functions: `read.spss()`, `read.dta()`, `read.xport()`
+    + Less complex but sometimes loses some metadata
+* `haven`
+    + Part of the `tidyverse` family
+    + Functions: `read_spss()`, `read_dta()`, `read_sas()`
+    + Keeps metadata like variable labels
+
+
+For less common formats, Google it. I've yet to encounter a data format without an 
+R package to handle it (or at least a clever hack).
+
+If you encounter an ambiguous file extension (e.g. `.dat`), try opening it with
+a good text editor first (e.g. Atom, Sublime); there's a good chance it is actually raw text
+with a delimiter or fixed format that R can handle!
+
+---
+
+# Installing Packages
+
+But what are packages? 
+
+--
+
+Packages contain functions (and sometimes data) created by the community. The real power of R is found in add-on packages!
+
+--
+
+For the remainder of today's course, we will work with data from the `gapminder` package.
+
+These data are a panel data describing 142 countries observed every 5 years from 1952 to 2007.
+
+--
+
+We can install `gapminder` from the Comprehensive R Archive Network (CRAN):
+
+
+```r
+install.packages("gapminder")
+```
+
+You only need to install a package **once** for any given version of R. You need to reinstall packages after upgrading R.
+
+---
+
+# Loading Packages
+
+To load a package, use `library()`:
+
+
+```r
+library(gapminder)
+```
+
+Once a package is loaded, you can call on functions or data inside it.
+
+
+```r
+data(gapminder) # Places data in your global environment
+head(gapminder) # Displays first six elements of an object
+```
+
+```
+## # A tibble: 6 x 6
+##   country     continent  year lifeExp      pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+## 1 Afghanistan Asia       1952    28.8  8425333      779.
+## 2 Afghanistan Asia       1957    30.3  9240934      821.
+## 3 Afghanistan Asia       1962    32.0 10267083      853.
+## 4 Afghanistan Asia       1967    34.0 11537966      836.
+## 5 Afghanistan Asia       1972    36.1 13079460      740.
+## 6 Afghanistan Asia       1977    38.4 14880372      786.
+```
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"always_allow_html": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

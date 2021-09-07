@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Indexing and basic plots</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Felix Wüthrich" />
+    <script src="indexing_and_plots_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Indexing and basic plots
+### Felix Wüthrich
+### 14.09.2021
+
+---
+
+
+
+
+
+
+# Indices and Dimensions
+
+Dataframes have *2* dimensions: **rows** and **columns**. Square brackets allow us to numerically **subset** in the format of `object[row, column]`. Leaving the row or column place empty selects *all* elements of that dimension.
+
+
+
+```r
+gapminder[1,] # First row
+```
+
+```
+## # A tibble: 1 x 6
+##   country     continent  year lifeExp     pop gdpPercap
+##   &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+## 1 Afghanistan Asia       1952    28.8 8425333      779.
+```
+
+```r
+gapminder[,1] # First column
+```
+
+```
+## # A tibble: 1,704 x 1
+##    country    
+##    &lt;fct&gt;      
+##  1 Afghanistan
+##  2 Afghanistan
+##  3 Afghanistan
+##  4 Afghanistan
+##  5 Afghanistan
+##  6 Afghanistan
+##  7 Afghanistan
+##  8 Afghanistan
+##  9 Afghanistan
+## 10 Afghanistan
+## # … with 1,694 more rows
+```
+
+---
+
+
+```r
+gapminder[c(1,2,3,4,5), c(3,4)] # First five rows, third and fourth column
+```
+
+```
+## # A tibble: 5 x 2
+##    year lifeExp
+##   &lt;int&gt;   &lt;dbl&gt;
+## 1  1952    28.8
+## 2  1957    30.3
+## 3  1962    32.0
+## 4  1967    34.0
+## 5  1972    36.1
+```
+
+
+```r
+gapminder[1:5, 3:4] # First five rows, third and fourth column
+```
+
+```
+## # A tibble: 5 x 2
+##    year lifeExp
+##   &lt;int&gt;   &lt;dbl&gt;
+## 1  1952    28.8
+## 2  1957    30.3
+## 3  1962    32.0
+## 4  1967    34.0
+## 5  1972    36.1
+```
+
+
+---
+
+# Dataframes and Names
+
+Columns in dataframes can also be accessed using their names with the `$` extract operator. This will return the column as a vector:
+
+
+```r
+gapminder$gdpPercap[1:10]
+```
+
+```
+##  [1] 779.4453 820.8530 853.1007 836.1971 739.9811 786.1134 978.0114 852.3959
+##  [9] 649.3414 635.3414
+```
+
+--
+
+Note here I *also* used brackets to select just the first 10 elements of that column.
+
+You can mix subsetting formats! In this case I provided only a single value (no column index) because **vectors** have *only one dimension* (length).
+
+If you try to subset something and get a warning about "incorrect number of dimensions", check your subsetting!
+
+---
+
+# Indexing by Expression
+
+We can also index using expressions—logical *tests*.
+
+
+```r
+gapminder[gapminder$year==1952, ]
+```
+
+```
+## # A tibble: 142 x 6
+##    country     continent  year lifeExp      pop gdpPercap
+##    &lt;fct&gt;       &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;    &lt;int&gt;     &lt;dbl&gt;
+##  1 Afghanistan Asia       1952    28.8  8425333      779.
+##  2 Albania     Europe     1952    55.2  1282697     1601.
+##  3 Algeria     Africa     1952    43.1  9279525     2449.
+##  4 Angola      Africa     1952    30.0  4232095     3521.
+##  5 Argentina   Americas   1952    62.5 17876956     5911.
+##  6 Australia   Oceania    1952    69.1  8691212    10040.
+##  7 Austria     Europe     1952    66.8  6927772     6137.
+##  8 Bahrain     Asia       1952    50.9   120447     9867.
+##  9 Bangladesh  Asia       1952    37.5 46886859      684.
+## 10 Belgium     Europe     1952    68    8730405     8343.
+## # … with 132 more rows
+```
+
+---
+
+# How Expressions Work
+
+What does `gapminder$year==1952` actually do? 
+
+--
+
+
+```r
+head(gapminder$year==1952, 50) # display first 50 elements
+```
+
+```
+##  [1]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [13]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [25]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [37]  TRUE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE
+## [49]  TRUE FALSE
+```
+
+--
+
+It returns a vector of `TRUE` or `FALSE` values.
+
+When used with the subset operator (`[]`), elements for which a `TRUE` is given are returned while those corresponding to `FALSE` are dropped.
+
+---
+
+# Logical Operators
+
+We used `==` for testing "equals": `gapminder$year==1952`.
+
+--
+
+There are many other [logical operators](http://www.statmethods.net/management/operators.html):
+
+--
+
+* `!=`: not equal to
+--
+
+* `&gt;`, `&gt;=`, `&lt;`, `&lt;=`: less than, less than or equal to, etc.
+--
+
+* `%in%`: used with checking equal to one of several values
+
+--
+
+Or we can combine multiple logical conditions:
+
+* `&amp;`: both conditions need to hold (AND)
+--
+
+* `|`: at least one condition needs to hold (OR)
+--
+
+* `!`: inverts a logical condition (`TRUE` becomes `FALSE`, `FALSE` becomes `TRUE`)
+
+--
+
+Logical operators are one of the foundations of programming. You should experiment with these to become familiar with how they work!
+
+---
+
+# Sidenote: Missing Values
+
+Missing values are coded as `NA` entries without quotes:
+
+
+```r
+vector_w_missing &lt;- c(1, 2, NA, 4, 5, 6, NA)
+```
+
+Even one `NA` "poisons the well": You'll get `NA` out of your calculations unless you remove them manually or use the extra argument `na.rm = TRUE` in some functions:
+
+
+```r
+mean(vector_w_missing)
+```
+
+```
+## [1] NA
+```
+
+```r
+mean(vector_w_missing, na.rm=TRUE)
+```
+
+```
+## [1] 3.6
+```
+
+---
+# Finding Missing Values
+
+**WARNING:** You can't test for missing values by seeing if they "equal" (`==`) `NA`:
+
+
+```r
+vector_w_missing == NA
+```
+
+```
+## [1] NA NA NA NA NA NA NA
+```
+
+But you can use the `is.na()` function:
+
+
+```r
+is.na(vector_w_missing)
+```
+
+```
+## [1] FALSE FALSE  TRUE FALSE FALSE FALSE  TRUE
+```
+
+We can use subsetting to get the equivalent of `na.rm=TRUE`:
+
+
+```r
+*mean(vector_w_missing[!is.na(vector_w_missing)])
+```
+
+```
+## [1] 3.6
+```
+
+.pull-right[
+.footnote[
+`!` *reverses* a logical condition. Read the above as "subset *not* `NA`"
+]
+]
+
+---
+
+# Multiple Conditions Example
+
+Let's say we want observations from Oman after 1980 and through 2000.
+
+--
+
+
+```r
+gapminder[gapminder$country == "Oman" &amp;
+          gapminder$year &gt; 1980 &amp;
+          gapminder$year &lt;= 2000, ]
+```
+
+```
+## # A tibble: 4 x 6
+##   country continent  year lifeExp     pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+## 1 Oman    Asia       1982    62.7 1301048    12955.
+## 2 Oman    Asia       1987    67.7 1593882    18115.
+## 3 Oman    Asia       1992    71.2 1915208    18617.
+## 4 Oman    Asia       1997    72.5 2283635    19702.
+```
+
+.footnote[
+Note we always need to use the full object name in each subseting argument, rather than just `country == "Oman"` alone. You can subset one object using another this way (e.g. `gapminder[other_data$some_variable == x, ]`).
+]
+
+---
+
+# Saving a Subset
+
+If we think a particular subset will be used repeatedly, we can save it and give it a name like any other object:
+
+
+```r
+China &lt;- gapminder[gapminder$country == "China", ]
+head(China, 4)
+```
+
+```
+## # A tibble: 4 x 6
+##   country continent  year lifeExp       pop gdpPercap
+##   &lt;fct&gt;   &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;     &lt;int&gt;     &lt;dbl&gt;
+## 1 China   Asia       1952    44   556263527      400.
+## 2 China   Asia       1957    50.5 637408000      576.
+## 3 China   Asia       1962    44.5 665770000      488.
+## 4 China   Asia       1967    58.4 754550000      613.
+```
+
+---
+# Another Operator: `%in%`
+
+A common thing we may want to do is subset rows to things in some *set*.
+
+We can use `%in%` like `==` but it matches *any element* in the vector on its right. 
+
+
+```r
+former_yugoslavia &lt;- c("Bosnia and Herzegovina", "Croatia", 
+              "Macedonia", "Montenegro", "Serbia", "Slovenia")
+yugoslavia &lt;- gapminder[gapminder$country %in% former_yugoslavia, ]
+head(yugoslavia)
+```
+
+```
+## # A tibble: 6 x 6
+##   country                continent  year lifeExp     pop gdpPercap
+##   &lt;fct&gt;                  &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;   &lt;int&gt;     &lt;dbl&gt;
+## 1 Bosnia and Herzegovina Europe     1952    53.8 2791000      974.
+## 2 Bosnia and Herzegovina Europe     1957    58.4 3076000     1354.
+## 3 Bosnia and Herzegovina Europe     1962    61.9 3349000     1710.
+## 4 Bosnia and Herzegovina Europe     1967    64.8 3585000     2172.
+## 5 Bosnia and Herzegovina Europe     1972    67.4 3819000     2860.
+## 6 Bosnia and Herzegovina Europe     1977    69.9 4086000     3528.
+```
+
+---
+## Create New Columns
+
+We can create new columns (variables) in a dataframe using the same subsetting functions.
+
+
+
+
+```r
+yugoslavia$pop_million &lt;- yugoslavia$pop / 1000000
+yugoslavia$life_exp_past_40 &lt;- yugoslavia$lifeExp - 40
+head(yugoslavia)
+```
+
+```
+## # A tibble: 6 x 8
+##   country  continent  year lifeExp    pop gdpPercap pop_million life_exp_past_40
+##   &lt;fct&gt;    &lt;fct&gt;     &lt;int&gt;   &lt;dbl&gt;  &lt;int&gt;     &lt;dbl&gt;       &lt;dbl&gt;            &lt;dbl&gt;
+## 1 Bosnia … Europe     1952    53.8 2.79e6      974.        2.79             13.8
+## 2 Bosnia … Europe     1957    58.4 3.08e6     1354.        3.08             18.5
+## 3 Bosnia … Europe     1962    61.9 3.35e6     1710.        3.35             21.9
+## 4 Bosnia … Europe     1967    64.8 3.58e6     2172.        3.58             24.8
+## 5 Bosnia … Europe     1972    67.4 3.82e6     2860.        3.82             27.4
+## 6 Bosnia … Europe     1977    69.9 4.09e6     3528.        4.09             29.9
+```
+
+.footnote[
+Note one of our new variables is not displayed due to limited width.
+]
+
+---
+# `ifelse()`
+
+
+A common function used in general in R programming is `ifelse()`. This returns a value depending on logical tests.
+
+
+```r
+ifelse(test = x==y, yes = 1, no = 2)
+```
+
+Output from `ifelse()`:
+* `ifelse()` returns the value assigned to `yes` (in this case, `1`) if `x==y` is `TRUE`.
+
+* `ifelse()` returns `no` (in this case, `2`) if `x==y` is `FALSE`.
+
+* `ifelse()` returns `NA` if `x==y` is neither `TRUE` nor `FALSE`.
+
+Note we can omit explicitly typing function arguments like `test = ` if we enter them in the order of arguments shown in the function's help page.
+
+---
+# `ifelse()` Example
+
+.small[
+
+```r
+yugoslavia$short_country &lt;-  ifelse(yugoslavia$country == "Bosnia and Herzegovina",
+                                    "B and H",
+                                    as.character(yugoslavia$country))
+yugoslavia[yugoslavia$year==1952, c(1,9)] # Selecting just columns 1 and 9
+```
+
+```
+## # A tibble: 5 x 2
+##   country                short_country
+##   &lt;fct&gt;                  &lt;chr&gt;        
+## 1 Bosnia and Herzegovina B and H      
+## 2 Croatia                Croatia      
+## 3 Montenegro             Montenegro   
+## 4 Serbia                 Serbia       
+## 5 Slovenia               Slovenia
+```
+]
+
+Read this as "For each row, if `country` equals `"Bosnia and Herzegovina"`, make `short_country` equal to `"B and H"`, otherwise make it equal to that row's original value of `country` (as character, rather than factor, data)."
+
+This is a simple way to change some values but not others!
+
+---
+
+class: middle, inverse, center
+
+## Basic Plots
+
+---
+
+# Histograms
+
+We can use the `hist()` function to generate a histogram of a vector:
+
+
+```r
+hist(gapminder$lifeExp,
+*    xlab = "Life Expectancy (years)",
+*    main = "Observed Life Expectancies of Countries")
+```
+
+- `xlab =` is used to set the label of the x-axis of a plot.
+- `main = ` is used to set the title of a plot.
+- Use `?hist` to see additional options available for customizing a histogram.
+
+---
+
+class: center
+
+&lt;img src="indexing_and_plots_files/figure-html/unnamed-chunk-20-1.png" width="504" /&gt;
+
+
+---
+
+# Scatter Plots
+
+
+```r
+*plot(lifeExp ~ gdpPercap, data = gapminder,
+     xlab = "ln(GDP per Capita)",
+     ylab = "Life Expectancy (years)",
+     main = "Life Expectancy and log GDP per Capita",
+     pch = 16, log="x") # log="x" sets x axis to log scale!
+*abline(h = mean(gapminder$lifeExp), col = "firebrick")
+*abline(v = mean(gapminder$gdpPercap), col = "cornflowerblue")
+```
+
+Note that `lifeExp ~ gdpPercap` is a **formula** of the type `y ~ x`. The first element (`lifeExp`) gets plotted on the y-axis and the second (`gdpPercap`) goes on the x-axis.
+
+The `abline()` calls place horizontal (`h =`) or vertical (`v =`) lines at the means of the variables used in the plot. 
+
+---
+
+class: center
+
+&lt;img src="indexing_and_plots_files/figure-html/unnamed-chunk-22-1.png" width="504" /&gt;
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"always_allow_html": true
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
