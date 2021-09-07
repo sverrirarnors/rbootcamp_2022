@@ -1,0 +1,326 @@
+---
+title: "Welcome to the R Bootcamp 2021!"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(fig.retina = 3, message = FALSE) #rendering sharp plots / not showing messages
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(xaringanthemer)
+style_mono_light(base_color = "#081c15")
+#class: inverse, center, middle
+library(tidyverse)
+```
+
+## Overall schedule
+
+- Admin
+- Meet the instructors
+- Day 1: The basics of R (Studio)
+- Day 2: Data wrangling and visualizations
+- Social event with GessWho!
+
+---
+
+## Admin
+
+- Please (properly) wear masks at all time
+
+- The lessons are fairly packed but everything is available online (LINK)
+
+- Feel free to ask questions at any time!
+
+---
+
+class: inverse, center, middle
+
+## Meet the instructors
+
+---
+
+class: center, middle
+
+## Today's schedule
+
+|Time       |Content                           |
+|-----------|----------------------------------|
+|10:00      |Meet & Greet Breakfast            |
+|10:45-11:30|General introduction to R (Studio)|
+|11:45-12:30|Objects, functions, scripts       |
+|12:30-14:00|Lunch Break                       |
+|14:00-14:45|Data formats, packages, indexing  |
+|15:00-15:45|Basic plots and final exercise    |
+
+---
+
+## Any experience with R?
+
+```{r, include=FALSE}
+n <- c(12, 5, 13, 2)
+names(n) <- c("No", "Yes, on my own", "Yes, during undergrad", "Yes, for work")
+
+plot_experience <- bind_rows(n) %>% 
+  pivot_longer(everything(), names_to = "experience", values_to = "value") %>%
+  mutate(freq_rel = value/sum(value)) %>% 
+  ggplot(aes(x = fct_reorder(experience, -freq_rel), y = freq_rel)) +
+  geom_col() +
+  scale_y_continuous(labels = scales::label_percent(accuracy = 1)) +
+  theme_xaringan() +
+  theme(axis.title = element_blank(),
+        panel.grid = element_blank())
+```
+
+```{r, echo=FALSE, fig.width=10}
+plot_experience
+```
+
+
+---
+
+## Any experience with other languages?
+
+```{r, echo=FALSE}
+languages <- c(3, 10, 7,8, 3)
+names(languages) <- c("Stata", "Python", "Matlab", "SPSS", "Multiple")
+
+plot_languages <- bind_rows(languages) %>% 
+  pivot_longer(everything(), names_to = "experience", values_to = "value") %>%
+  mutate(freq_rel = value/sum(value)) %>% 
+  ggplot(aes(x = fct_reorder(experience, -value), y = value)) +
+  geom_col() +
+  scale_y_continuous(breaks = seq(0,10,5), labels = seq(0,10,5)) +
+  theme_xaringan() +
+  theme(axis.title = element_blank(),
+        panel.grid = element_blank())
+```
+
+```{r, echo=FALSE, fig.width=10}
+plot_languages
+```
+
+---
+
+## Program
+
+```{r, echo=FALSE, fig.width=10}
+# library
+library(treemapify)
+ 
+# Create data
+group <- c("STP","MACIS")
+value <- c(13,15)
+data <- data.frame(group,value)
+ 
+# treemap
+ggplot(data, 
+aes(area = value, fill = group,label = group)) +
+   geom_treemap() +
+   geom_treemap_text(
+     colour = "white",
+     place = "centre",
+     size = 15) +
+  theme_xaringan() +
+  labs(fill = "") +
+  scale_fill_brewer(palette = "Reds") +
+  theme(legend.position = "none")
+```
+
+---
+
+# R or Python?
+
+- The primary objective of R is (was) data analysis and statistics. The primary objective of Python is (was) deployment and production. 
+
+BUT: 
+
+- What language do your colleagues use?
+- Who is working with the data?
+- What tasks are you performing?
+
+---
+# Why R?
+
+R is a programming language built for statistical computing.
+
+If one already knows Stata or similar software, why use R?
+
+--
+
+* R is *free*, so you don't need a terminal server or license.
+
+--
+
+* R has a *very* large community for support and packages.
+
+--
+
+* R can handle virtually any data format.
+
+--
+
+* R makes replication *easy*.
+
+--
+
+* R is a *language* so it can do *everything*.<sup>1</sup>
+
+.footnote[[1] Including generate these slides (using RMarkdown)!]
+--
+
+* R is similar to other programming languages.
+
+---
+
+# R Studio
+
+R Studio is a "front-end" or integrated development environment (IDE) for R that can make your life *easier*.
+
+--
+
+RStudio can:
+--
+
+* Organize your code, output, and plots.
+
+--
+
+* Auto-complete code and highlight syntax.
+
+--
+
+* Help view data and objects.
+
+--
+
+* [Enable easy integration of R code into documents.](https://rmarkdown.rstudio.com/)
+
+---
+# Getting Started
+
+Open up RStudio now and choose *File > New File > R Script*.
+
+Then, let's get oriented with the interface:
+
+* *Top Left*: Code **editor** pane, data viewer (browse with tabs)
+
+* *Bottom Left*: **Console** for running code (`>` prompt)
+
+* *Top Right*: List of objects in **environment**, code **history** tab.
+
+* *Bottom Right*: Tabs for browsing files, viewing plots, managing packages, and viewing help files.
+
+You can change the layout in *Preferences > Pane Layout*. Also, there are a lot of very useful shortcuts!
+
+---
+
+# Editing and Running Code
+
+There are several ways to run R code in RStudio:
+--
+
+* Highlight lines in the **editor** window and click *Run* at the top or hit `Ctrl+Enter` or `⌘+Enter` to run them all.
+
+--
+
+* With your **caret** on a line you want to run, hit `Ctrl+Enter` or `⌘+Enter`. Note your caret moves to the next line, so you can run code sequentially with repeated presses. 
+
+--
+
+* Type individual lines in the **console** and press `Enter`.
+
+--
+
+The console will show the lines you ran followed by any printed output.
+
+---
+
+# Incomplete Code
+
+If you mess up (e.g. leave off a parenthesis), R might show a `+` sign prompting you to finish the command:
+
+```{r Coding 1, eval=FALSE}
+> (11-2
++
+```
+
+Finish the command or hit `Esc` to get out of this.
+
+---
+
+# R as a Calculator
+
+In the **console**, type `123 + 456 + 789` and hit `Enter`.
+--
+
+```{r Calc 1}
+123 + 456 + 789
+```
+
+--
+
+The `[1]` in the output indicates the numeric **index** of the first element on that line.
+
+--
+
+Now in your blank R document in the **editor**, try typing the line `sqrt(400)` and either
+clicking *Run* or hitting `Ctrl+Enter` or `⌘+Enter`.
+
+--
+
+```{r Calc 2}
+sqrt(400)
+```
+
+---
+
+# Functions and Help
+
+`sqrt()` is an example of a **function** in R.
+
+If we didn't have a good guess as to what `sqrt()` will do, we can type `?sqrt` in the console
+and look at the **Help** panel on the right.
+
+```{r Help, eval=FALSE}
+?sqrt
+```
+
+**Arguments** are the *inputs* to a function. In this case, the only argument to `sqrt()`
+is `x` which can be a number or a vector of numbers.
+
+Help files provide documentation on how to use functions and what functions produce.
+
+---
+
+# R Projects
+
+Usually, you have several scripts, numerous datasets and other files. Where are they stored?
+
+```{r, eval=FALSE}
+getwd()
+```
+
+You can specify the working directory at the beginning of each session...
+
+```{r, eval=FALSE}
+setwd()
+```
+
+... or use R Projects (a product by R Studio) instead. How does it work?
+
+1. Creates a project file (with an .Rproj extension) within the project directory.
+2. Creates a hidden directory (named .Rproj.user) where project-specific temporary files are stored. 
+3. Loads the project into RStudio and display its name in the Projects toolbar 
+
+This is super useful when collaborating on different operating systems!
+
+---
+

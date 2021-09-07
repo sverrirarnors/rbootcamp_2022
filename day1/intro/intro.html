@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Welcome to the R Bootcamp 2021!</title>
+    <meta charset="utf-8" />
+    <script src="intro_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# Welcome to the R Bootcamp 2021!
+
+---
+
+
+
+
+
+
+## Overall schedule
+
+- Admin
+- Meet the instructors
+- Day 1: The basics of R (Studio)
+- Day 2: Data wrangling and visualizations
+- Social event with GessWho!
+
+---
+
+## Admin
+
+- Please (properly) wear masks at all time
+
+- The lessons are fairly packed but everything is available online (LINK)
+
+- Feel free to ask questions at any time!
+
+---
+
+class: inverse, center, middle
+
+## Meet the instructors
+
+---
+
+class: center, middle
+
+## Today's schedule
+
+|Time       |Content                           |
+|-----------|----------------------------------|
+|10:00      |Meet &amp; Greet Breakfast            |
+|10:45-11:30|General introduction to R (Studio)|
+|11:45-12:30|Objects, functions, scripts       |
+|12:30-14:00|Lunch Break                       |
+|14:00-14:45|Data formats, packages, indexing  |
+|15:00-15:45|Basic plots and final exercise    |
+
+---
+
+## Any experience with R?
+
+
+
+&lt;img src="intro_files/figure-html/unnamed-chunk-2-1.png" width="720" /&gt;
+
+
+---
+
+## Any experience with other languages?
+
+
+
+&lt;img src="intro_files/figure-html/unnamed-chunk-4-1.png" width="720" /&gt;
+
+---
+
+## Program
+
+&lt;img src="intro_files/figure-html/unnamed-chunk-5-1.png" width="720" /&gt;
+
+---
+
+# R or Python?
+
+- The primary objective of R is (was) data analysis and statistics. The primary objective of Python is (was) deployment and production. 
+
+BUT: 
+
+- What language do your colleagues use?
+- Who is working with the data?
+- What tasks are you performing?
+
+---
+# Why R?
+
+R is a programming language built for statistical computing.
+
+If one already knows Stata or similar software, why use R?
+
+--
+
+* R is *free*, so you don't need a terminal server or license.
+
+--
+
+* R has a *very* large community for support and packages.
+
+--
+
+* R can handle virtually any data format.
+
+--
+
+* R makes replication *easy*.
+
+--
+
+* R is a *language* so it can do *everything*.&lt;sup&gt;1&lt;/sup&gt;
+
+.footnote[[1] Including generate these slides (using RMarkdown)!]
+--
+
+* R is similar to other programming languages.
+
+---
+
+# R Studio
+
+R Studio is a "front-end" or integrated development environment (IDE) for R that can make your life *easier*.
+
+--
+
+RStudio can:
+--
+
+* Organize your code, output, and plots.
+
+--
+
+* Auto-complete code and highlight syntax.
+
+--
+
+* Help view data and objects.
+
+--
+
+* [Enable easy integration of R code into documents.](https://rmarkdown.rstudio.com/)
+
+---
+# Getting Started
+
+Open up RStudio now and choose *File &gt; New File &gt; R Script*.
+
+Then, let's get oriented with the interface:
+
+* *Top Left*: Code **editor** pane, data viewer (browse with tabs)
+
+* *Bottom Left*: **Console** for running code (`&gt;` prompt)
+
+* *Top Right*: List of objects in **environment**, code **history** tab.
+
+* *Bottom Right*: Tabs for browsing files, viewing plots, managing packages, and viewing help files.
+
+You can change the layout in *Preferences &gt; Pane Layout*. Also, there are a lot of very useful shortcuts!
+
+---
+
+# Editing and Running Code
+
+There are several ways to run R code in RStudio:
+--
+
+* Highlight lines in the **editor** window and click *Run* at the top or hit `Ctrl+Enter` or `⌘+Enter` to run them all.
+
+--
+
+* With your **caret** on a line you want to run, hit `Ctrl+Enter` or `⌘+Enter`. Note your caret moves to the next line, so you can run code sequentially with repeated presses. 
+
+--
+
+* Type individual lines in the **console** and press `Enter`.
+
+--
+
+The console will show the lines you ran followed by any printed output.
+
+---
+
+# Incomplete Code
+
+If you mess up (e.g. leave off a parenthesis), R might show a `+` sign prompting you to finish the command:
+
+
+```r
+&gt; (11-2
++
+```
+
+Finish the command or hit `Esc` to get out of this.
+
+---
+
+# R as a Calculator
+
+In the **console**, type `123 + 456 + 789` and hit `Enter`.
+--
+
+
+```r
+123 + 456 + 789
+```
+
+```
+## [1] 1368
+```
+
+--
+
+The `[1]` in the output indicates the numeric **index** of the first element on that line.
+
+--
+
+Now in your blank R document in the **editor**, try typing the line `sqrt(400)` and either
+clicking *Run* or hitting `Ctrl+Enter` or `⌘+Enter`.
+
+--
+
+
+```r
+sqrt(400)
+```
+
+```
+## [1] 20
+```
+
+---
+
+# Functions and Help
+
+`sqrt()` is an example of a **function** in R.
+
+If we didn't have a good guess as to what `sqrt()` will do, we can type `?sqrt` in the console
+and look at the **Help** panel on the right.
+
+
+```r
+?sqrt
+```
+
+**Arguments** are the *inputs* to a function. In this case, the only argument to `sqrt()`
+is `x` which can be a number or a vector of numbers.
+
+Help files provide documentation on how to use functions and what functions produce.
+
+---
+
+# R Projects
+
+Usually, you have several scripts, numerous datasets and other files. Where are they stored?
+
+
+```r
+getwd()
+```
+
+You can specify the working directory at the beginning of each session...
+
+
+```r
+setwd()
+```
+
+... or use R Projects (a product by R Studio) instead. How does it work?
+
+1. Creates a project file (with an .Rproj extension) within the project directory.
+2. Creates a hidden directory (named .Rproj.user) where project-specific temporary files are stored. 
+3. Loads the project into RStudio and display its name in the Projects toolbar 
+
+This is super useful when collaborating on different operating systems!
+
+---
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
