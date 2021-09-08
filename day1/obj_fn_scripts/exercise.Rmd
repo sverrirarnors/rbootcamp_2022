@@ -1,0 +1,26 @@
+---
+title: "Exercises: Objects, functions, scripts"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+1. Create a new project and check out the new working directory. 
+
+2. Open a new script.
+
+3. Create both a numeric and a character vector.
+
+4. Once that's done, apply functions such as mean() or sqrt() to the numeric vector and relevel the character vector. If you don't know how the relevel()-function works, check out the corresponding help file.
+
+5. Quick tip: Check out the handy shortcuts that help you navigate the RStudio IDE a lot easier! Try to find the shortcut for the assignment operator to save a lot of time in the future. You can also customize these shortcuts if you like!
+
+6. Save one of your vectors as an R object. 
+
+7. Download some of the datasets provided here (Link: https://corgis-edu.github.io/corgis/csv/) and load them into your workspace.
+
+8. If you're all done with that, help your peers! 

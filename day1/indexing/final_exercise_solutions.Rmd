@@ -1,0 +1,105 @@
+---
+title: "Final Exercise Day1: Solutions"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+<br>
+
+1. If you haven't done so already, install the readr or the tidytuesdayR package to get the data.
+
+```{r}
+ikea <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-11-03/ikea.csv')
+```
+
+2. What are the dimensions of the dataset? How many columns and rows does it contain? Store this information in separate objects. (Hint: dim(), nrow(), and ncol() are your friends)
+
+```{r}
+dimensions <- dim(ikea)
+dimensions
+
+number_rows <- nrow(ikea)
+number_columns <- ncol(ikea)
+
+paste("Rows:", number_rows, "/", "Columns:", number_columns)
+```
+
+3. To grasp the prices more easily, create a new column with the price conversion in Swiss Francs. One Saudi Riyal roughly corresponds to 0.25 CHF. What's the median and mean price, respectively, in CHF?
+
+
+```{r}
+ikea$chf <- ikea$price*0.25
+
+median(ikea$chf)
+mean(ikea$chf)
+```
+
+4. Plot the price distribution and name the title and the x-axis properly.
+
+```{r}
+hist(ikea$chf,
+     main = "Price distribution of IKEA items",
+     xlab = "Price (in CHF)")
+```
+
+5. Next, compute the volume of each item and store it in a new column. Is the distribution as skewed as the previous one?
+
+```{r}
+ikea$volume <- ikea$depth*ikea$height*ikea$width
+
+hist(ikea$volume,
+     main = "Distribution of IKEA items' volumes",
+     xlab = "Volume (in cubic cm)")
+```
+
+6. Since a lot of items cost less than 100CHF, let's have a closer look and create a separate data frame for them. But don't forget to save the complete dataset in your workspace!
+
+```{r}
+cheap_items <- ikea[ikea$chf < 100,]
+
+save(ikea, file = "ikea.RData")
+```
+
+7. Now, let's have a closer look at the cheaper items. How does height relate to width? Visualize the correlation and properly name the axes. And are more voluminous items also more expensive?
+
+```{r}
+plot(cheap_items$height, cheap_items$width, 
+     xlab = "Height",
+     ylab = "Width")
+```
+
+```{r}
+plot(cheap_items$volume, cheap_items$chf,
+     xlab = "Volume",
+     ylab = "Price")
+```
+
+8. Now, back to the original dataset. Some items were on discount, but most of them weren't. Indicate that in a new variable called "discount". All items with "No old price" count as no discount, the rest as a discount. If you're not sure how the ifelse()-function works, check out the corresponding help file.
+
+```{r}
+ikea$discount <- ifelse(ikea$old_price == "No old price", 0, 1)
+```
+
+9. How many items were on discount? And what's the share of items that come in different colours?
+
+```{r}
+nrow(ikea[ikea$discount == 1, ])
+
+nrow(ikea[ikea$other_colors == "Yes", ])/nrow(ikea)
+```
+
+
+10. Great job, you completed the final exercise of Day 1! By now, you should know how to ...
+
+- create, call and store objects
+- load data frames
+- install and load packages
+- subset data frames
+- create new columns
+- use the ifelse()-function
+- create basic histograms and scatterplots
+
+If you're unsure about some of these tasks, check out the slides or the help files. You can also have a look at other useful functions such as str(), unique() or head(). Or you can help your peers and check your knowledge while explaining the tasks to them. 
