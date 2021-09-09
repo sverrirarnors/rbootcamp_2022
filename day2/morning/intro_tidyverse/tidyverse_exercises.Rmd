@@ -1,0 +1,33 @@
+---
+title: "Tidyverse - Exercises"
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+```
+
+```{r xaringan-themer, include=FALSE, warning=FALSE}
+library(tidyverse)
+library(palmerpenguins)
+data(package = "palmerpenguins")
+library(knitr)
+library(kableExtra)
+```
+
+<br>
+
+- Install the Tidyverse or update it. Then load it.
+
+- Check out magrittr’s help file on the forward pipe operator (`%>%`).
+
+- Let’s compare the Base R approach with the Tidyverse approach:
+
+  a. First, install the package `palmerpenguins` and load the built-in penguins dataset into RStudio. You can do this by typing `data(package = "palmerpenguins")`. How many rows and variables does the `penguins` dataset have? And how many factors?
+
+  b. Now select the following variables: `species`, `island`, `flipper_length_mm`, `sex`, `year`, once with the Base R approach, and once with the Tidyverse approach.
+
+  c. Remove all NAs. Again, once with the Base R and once with the Tidyverse approach.
+    
+- What’s the median flipper length of the different species? Try to obtain the same results with both approaches.
+
+- What’s the minimum body mass on the different islands? Again, try to find the same results with both approaches.
