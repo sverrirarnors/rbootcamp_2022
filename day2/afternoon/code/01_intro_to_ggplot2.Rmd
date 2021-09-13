@@ -20,7 +20,7 @@ knitr::opts_chunk$set(fig.retina = 3, message = FALSE) #rendering sharp plots / 
 
 ```{r xaringan-themer, include=FALSE, warning =FALSE}
 library(xaringanthemer)
-style_mono_light(base_color = "#23395b")
+style_mono_light(base_color = "#081c15")
 library(tidyverse)
 library(palmerpenguins)
 library(viridis)

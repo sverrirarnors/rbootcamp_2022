@@ -50,32 +50,17 @@ library(tidyverse)
 
 > Tell me and I forget <br> teach me and I remember, <br> involve me and I learn.
 
-<br>
-
 - Shoutout to Charles Lanfear (@clanfear) for providing the slides
 
 - Don't hesitate to share the slides and exercises as well
+
+- Thanks to GessWho! for organizing the social events
 
 ---
 
 class: inverse, center, middle
 
-## Meet the instructors
-
----
-
-## Today's schedule
-
-<br>
-
-|Time       |Content                           |
-|-----------|----------------------------------|
-|10:00      |Meet & Greet Breakfast            |
-|10:45-11:30|General introduction to R (Studio)|
-|11:45-12:30|Objects, functions, scripts       |
-|12:30-14:00|Lunch Break                       |
-|14:00-14:45|Data formats, packages, indexing  |
-|15:00-15:45|Basic plots and final exercise    |
+## A quick overview
 
 ---
 
@@ -100,7 +85,6 @@ plot_experience <- bind_rows(n) %>%
 ```{r, echo=FALSE, fig.width=10}
 plot_experience
 ```
-
 
 ---
 
@@ -152,6 +136,27 @@ aes(area = value, fill = group,label = group)) +
   scale_fill_brewer(palette = "Reds") +
   theme(legend.position = "none")
 ```
+
+---
+
+## Today's schedule
+
+<br>
+
+|Time       |Content                           |
+|-----------|----------------------------------|
+|10:00      |Meet & Greet Breakfast            |
+|10:45-11:30|General introduction to R (Studio)|
+|11:45-12:30|Objects, functions, scripts       |
+|12:30-14:00|Lunch Break                       |
+|14:00-14:45|Data formats, packages, indexing  |
+|15:00-15:45|Basic plots and final exercise    |
+
+---
+
+class: inverse, center, middle
+
+## Meet the instructors
 
 ---
 
