@@ -1,0 +1,106 @@
+---
+title: "Plotting with ggplot2"
+subtitle: "Final Exercise Solution"
+date: "15.09.2021"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(viridis)
+```
+
+# 1. Plot the mean body weight of female penguins of different species over time
+
+- Add tilte, labels, and rename the legend, 
+- Use the viridis color scale
+- Save the plot as "mean_weight_by_species_over_time.png"
+
+#### Here goes your code
+```{r}
+penguins %>% 
+  group_by(year, species) %>% 
+  mutate(mean_weight = mean(body_mass_g, na.rm=T)) %>% 
+  filter(sex=="female") %>% 
+  ggplot() +
+    aes(x=year, y=mean_weight, color=species) +
+    geom_line() +
+    geom_point(size=2) +
+    labs(title="Mean weight of different penguin species from 2007 to 2008",
+         x="Year",
+         y="Mean body weight (g)",
+         color="Species")+
+    scale_color_viridis(discrete=T)
+ggsave("mean_weight_by_species_over_time.png")
+```
+
+# Hints:
+```{r}
+hints_1 <- list("Use group_by()", "Gropu by year and species", "Use mutate to create a variable for the mean", "Filter for sex", "Use the color aesthetics","Remeber to handle NA's in mean()", "Remember ggsave()")
+write_rds(hints_1, file = "hints_1.dta")
+hints_1 <- read_rds("hints_1.dta")
+```
+
+Simply run the lines below with ctrl+enter to get hints
+```{r hint_1}
+print(hints_1[1])
+
+print(hints_1[2])
+
+print(hints_1[3])
+
+print(hints_1[4])
+
+print(hints_1[5])
+
+print(hints_1[6])
+
+print(hints_1[7])
+```
+
+
+# 2. For the motivated among you let's extend the exercise
+
+- Distinguish between islands
+- Add errorbars of +- one standard deviation
+- Clean the x-axis i.e. make sure only ticks for the relevant years are shown
+
+```{r}
+penguins %>% 
+  group_by(year, species, island) %>% 
+  mutate(mean_weight = mean(body_mass_g, na.rm=T), sd_weight = sd(body_mass_g, na.rm = T)) %>% 
+  ggplot() +
+    aes(x=year, y=mean_weight, color=species) +
+    geom_line() +
+    geom_point(size=2) +
+    geom_errorbar(aes(ymax=mean_weight+sd_weight, ymin=mean_weight-sd_weight), width=0.2) +
+    labs(title="Mean weight of different penguin species from 2007 to 2008",
+         x="Year",
+         y="Mean body weight (g)",
+         color="Species")+
+    scale_color_viridis(discrete=T) +
+    scale_x_continuous(breaks = c(2007, 2008, 2009)) +
+    facet_grid(rows = vars(island))
+```
+# Hints:
+```{r}
+hints_2 <-list("Use Facet grid for the islands", "Also group by islands!", "You get the standard deviation by using sd()", "geom_errorbar, has a parameter for width", "The x can be influenced through scale_x_*", "Ticks are called breaks in R")
+write_rds(hints_2, file = "hints_2.dta")
+hints_2 <- read_rds("hints_2.dta")
+```
+
+Simply run the lines below with ctrl+enter to get hints
+```{r hint_2}
+print(hints_2[1])
+
+print(hints_2[2])
+
+print(hints_2[3])
+
+print(hints_2[4])
+
+print(hints_2[5])
+
+print(hints_2[6])
+```

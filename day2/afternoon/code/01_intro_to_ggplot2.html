@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>A Brief Intro to Plotting with ggplot2</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Andreas Felderer" />
+    <script src="01_intro_to_ggplot2_files/header-attrs/header-attrs.js"></script>
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+# A Brief Intro to Plotting with ggplot2
+### Andreas Felderer
+### 15.09.2021
+
+---
+
+
+
+
+
+
+# Why ggplot(2)?
+
+
+### - Beautiful plots
+  
+--
+
+### - Part of the tidyverse
+  
+--
+
+### - Readability &amp; re-usability
+
+--
+
+### - Documentation
+
+---
+# Plot example
+.pull-left[
+
+```r
+plot(penguins$bill_length_mm,
+     penguins$bill_depth_mm)
+```
+
+&lt;img src="01_intro_to_ggplot2_files/figure-html/plot_plot-1.png" width="504" /&gt;
+]
+.pull-right[
+
+```r
+ggplot(penguins) +
+  aes(x=bill_length_mm, 
+      y=bill_depth_mm) +
+  geom_point() 
+```
+
+&lt;img src="01_intro_to_ggplot2_files/figure-html/plot_ggplot-1.png" width="504" /&gt;
+]
+---
+# What did we just plot?
+
+![image](figures/culmen_depth.png)
+
+---
+# How does ggplot work ?
+
+.pull-left[
+
+```r
+*ggplot(penguins) +
+  aes(x=bill_length_mm, 
+      y=bill_depth_mm) +
+  geom_point()
+```
+
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-1-1.png" width="504" /&gt;
+]
+.pull-right[
+1. **Data** 
+
+  - Provide ggplot with a dataframe
+]
+
+---
+# How does ggplot work ?
+.pull-left[
+
+```r
+ggplot(penguins) +      
+* aes(x=bill_length_mm,
+*     y=bill_depth_mm) +
+  geom_point()
+```
+
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-2-1.png" width="504" /&gt;
+]
+
+.pull-right[
+1.  Data 
+
+  - Provide ggplot with a dataframe
+
+2. **Aesthetics ("aes")**
+  
+  - Tell ggplot how to style the data
+  
+  - e.g. what belongs on the x and y axis or how to points
+]
+---
+
+# How does ggplot work ?
+.pull-left[
+
+```r
+ggplot(penguins) +      
+  aes(x=bill_length_mm, 
+      y=bill_depth_mm) +
+* geom_point()
+```
+
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-3-1.png" width="504" /&gt;
+]
+
+.pull-right[
+1.  Data 
+
+  - Provide ggplot with a dataframe
+
+2. Aesthetics ("aes")
+  
+  - Tell ggplot how to style the data
+  
+  - e.g. what belongs on the x and y axis or how to points
+
+3. **Geometries ("geoms")**
+      
+  - Tell ggplot the geometrical form to be used
+      
+  - e.g.: line, point, bar, box, ...
+]
+
+---
+# Whats the matter with geom?
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(x=bill_length_mm, 
+      y=bill_depth_mm) +
+  geom_point() +
+* geom_smooth(method="lm")
+```
+
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-4-1.png" width="504" /&gt;
+]
+.pull-right[
+- We can easily add another representation of the same data
+- In this case the best linear approximation of the data
+- But wait why is the slope negative?
+]
+
+---
+# Whats the matter with aes?
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(x=bill_length_mm, 
+      y=bill_depth_mm,
+*     color=species) +
+  geom_point() +
+  geom_smooth(method="lm")
+```
+
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-5-1.png" width="504" /&gt;
+]
+.pull-right[
+- We can easily add another aesthetic
+- In this case color each species in a different color
+- Now the slopes are positive
+- A nice example of Simpsons paradox
+]
+
+---
+# Example:
+### Plot distribution of bill length per islands:
+
+.pull-left[
+Let's start with a box plot
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=island) +
+* geom_boxplot()
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-6-1.png" width="504" /&gt;
+]
+---
+# Example:
+A boxplot may hide information which can be made accessible with jitter
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=island) +
+  geom_boxplot() +
+* geom_jitter()
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-7-1.png" width="504" /&gt;
+]
+---
+# Example:
+Another possibility is a violin plot (works best with lots of data)
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=island) +
+  # geom_boxplot() +
+* geom_violin(fill=NA) +
+  geom_jitter()
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-8-1.png" width="504" /&gt;
+]
+---
+# Example:
+Combining violin with boxplot is a powerful option
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=island) +
+  geom_violin() +
+  # geom_jitter()
+* geom_boxplot(width=0.2)
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-9-1.png" width="504" /&gt;
+]
+---
+# Example:
+Let's add title, labels, and a theme
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=island) +
+  geom_violin() +
+  geom_boxplot(width=0.2, 
+*              alpha=0.2,
+*              color = "white") +
+* labs(title = "Bill length distribution",
+*      x = "Island",
+*      y = "Bill Length (mm)") +
+* theme_xaringan()
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-10-1.png" width="504" /&gt;
+]
+---
+# Example:
+Let's distinguish between species
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=island, 
+*     color=species) +
+* geom_violin(width=0.75, alpha=0.7) +
+* geom_boxplot(alpha=0.2) +
+  labs(title = "Bill length distribution",
+       x = "Island",
+       y = "Bill Length (mm)")
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-11-1.png" width="504" /&gt;
+]
+---
+# Example:
+And change colors to the viridis scale (optimized for colorblind, and grayscale printing)
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=island, 
+      color=species) +
+  geom_violin(width=0.75, alpha=0.7) +
+  geom_boxplot(alpha=0.2) + 
+  labs(title = "Bill length distribution",
+       x = "Island",
+       y = "Bill Length (mm)") +
+* scale_color_viridis(discrete = TRUE)
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-12-1.png" width="504" /&gt;
+]
+---
+# Example:
+Rename the legend
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=island,
+      color=species) +
+  geom_violin(width=0.75, alpha=0.7) + 
+  geom_boxplot(alpha=0.2) + 
+  labs(title = "Bill length distribution",
+       x = "Island",
+       y = "Bill Length (mm)",
+*      color = "Species") +
+  scale_color_viridis(discrete = TRUE)
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-13-1.png" width="504" /&gt;
+]
+---
+# Example:
+Use the power of faceting
+.pull-left[
+
+```r
+ggplot(penguins) +
+* aes(y=bill_length_mm, x=species,
+*     color=species) +
+* facet_grid(cols = vars(island)) +
+  geom_violin(width=0.75, alpha=0.7) + 
+* geom_boxplot(width=0.3, alpha=0.2) +
+  labs(title = "Bill length distribution",
+       x = "Island",
+       y = "Bill Length (mm)",
+       color = "Species") +
+  scale_color_viridis(discrete = TRUE)
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-14-1.png" width="504" /&gt;
+]
+---
+# Example:
+And save the plot as .png with ggsave. 
+.pull-left[
+
+```r
+ggplot(penguins) +
+  aes(y=bill_length_mm, x=species, 
+      color=species) +
+  facet_grid(cols = vars(island)) +
+  geom_violin(width=0.75, alpha=0.7) + 
+  geom_boxplot(width=0.3, alpha=0.2) + 
+  labs(title = "Bill length distribution",
+       x = "Island",
+       y = "Bill Length (mm)",
+       color = "Species") +
+  scale_color_viridis(discrete = TRUE) 
+```
+
+```r
+ggsave("our_first_plot.png")
+```
+]
+.pull-right[
+&lt;img src="01_intro_to_ggplot2_files/figure-html/unnamed-chunk-15-1.png" width="504" /&gt;
+ggsave() can save plots as:  "eps", "ps", "tex" (pictex), "pdf", "jpeg", "tiff", "png", "bmp", "svg" or "wmf" (windows only).
+]
+---
+
+# There are many, many ways to represent data
+.pull-left[
+![image](figures/r-graph-gallery.png)
+]
+.pull-right[
+1.  Ridgline
+
+2.  Histogram
+
+3.  Spider plot
+
+4.  Treemap
+
+5.  Bubble
+        
+6. etc. ...
+]
+
+---
+# Helpful resources
+
+  - **The Documaentation:** 
+  
+  &lt;https://ggplot2.tidyverse.org/index.html&gt;
+  
+  - **R Cheatsheets (ggplot2):**
+  
+  &lt;https://github.com/rstudio/cheatsheets/blob/master/data-visualization-2.1.pdf&gt;
+
+  - **Extensive intro to ggplot:** The R-Graphics Cookbook: 
+  
+  &lt;https://r-graphics.org/&gt;
+
+  - **Concise intro to ggplot:** The *Graphics for Communication* chapter from R4DS:
+  
+  &lt;https://r4ds.had.co.nz/graphics-for-communication.html&gt;
+
+  - **Inspiration:** The R Graph Gallery:
+  
+  &lt;https://www.r-graph-gallery.com/&gt;
+  
+---
+# Questions?
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"ratio": "16:9",
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

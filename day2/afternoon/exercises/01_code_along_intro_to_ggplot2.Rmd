@@ -1,0 +1,83 @@
+---
+title: "A Brief Intro to Plotting with ggplot2"
+subtitle: "code-along"
+date: "14.09.2021"
+---
+
+```{r include=FALSE, warning =FALSE}
+library(tidyverse)
+library(palmerpenguins)
+library(viridis)
+```
+
+# How does ggplot work ?
+
+```{r,  warning =FALSE}
+ggplot(penguins) +      
+  aes(x=bill_length_mm,  
+      y=bill_depth_mm) + 
+  geom_point()
+```
+
+# Example
+
+### Plot distribution of bill length per islands:
+
+```{r, warning =FALSE}
+ggplot(penguins)
+
+```
+
+### A boxplot may hide information which can be made accessible with jitter
+
+```{r, warning =FALSE}
+
+```
+
+### Another possibility is a violin plot (works best with lots of data)
+
+```{r, warning =FALSE}
+
+```
+
+### Combining violin with boxplot is a powerful option
+
+```{r, warning =FALSE}
+
+```
+
+### Let's add title, labels, and a theme
+
+```{r, warning =FALSE}
+
+```
+
+### Let's distinguish between species
+
+```{r, warning =FALSE}
+
+```
+
+### And change colors to the viridis scale (optimized for colorblind, and grayscale printing)
+
+```{r, warning =FALSE}
+
+```
+
+### Rename the legend
+
+```{r, warning =FALSE}
+
+```
+
+### Use the power of faceting
+
+```{r, warning =FALSE}
+
+```
+
+### And save the plot as .png with ggsave().
+
+```{r, warning =FALSE}
+
+```

@@ -1,0 +1,78 @@
+---
+title: "Plotting with ggplot2"
+subtitle: "Final Exercise Solution"
+date: "15.09.2021"
+output: html_notebook
+---
+
+```{r}
+library(tidyverse)
+library(palmerpenguins)
+library(viridis)
+```
+
+# 1. Plot the mean body weight of female penguins of different species over time
+
+- Add tilte, labels, and rename the legend, 
+- Use the viridis color scale
+- Save the plot as "mean_weight_by_species_over_time.png"
+
+#### Here goes your code
+```{r}
+penguins %>% 
+```
+
+# Hints:
+```{r}
+hints_1 <- read_rds("hints_1.dta")
+```
+
+Simply run the lines below with ctrl+enter to get hints
+```{r hint_1}
+print(hints_1[1])
+
+print(hints_1[2])
+
+print(hints_1[3])
+
+print(hints_1[4])
+
+print(hints_1[5])
+
+print(hints_1[6])
+
+print(hints_1[7])
+```
+
+
+# 2. For the motivated among you let's extend the exercise
+
+- Distinguish between islands
+- Add errorbars of +- one standard deviation
+- Clean the x-axis i.e. make sure only ticks for the relevant years are shown
+
+# Here goes your code
+
+### Reuse your previous solution
+```{r}
+penguins %>% 
+```
+# Hints:
+```{r}
+hints_2 <- read_rds("hints_2.dta")
+```
+
+Simply run the lines below with ctrl+enter to get hints
+```{r hint_2}
+print(hints_2[1])
+
+print(hints_2[2])
+
+print(hints_2[3])
+
+print(hints_2[4])
+
+print(hints_2[5])
+
+print(hints_2[6])
+```
