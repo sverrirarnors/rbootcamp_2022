@@ -29,32 +29,13 @@ library(kableExtra)
 
 ## Outline
 
-???
-
-- Learn how to work with the package dplyr and its most important functions, also called verbs
-- We're going to do this in 2 parts to ease the learning process
-- We'll be looking at fours functions, which are fairly self-explanatory
-- Present functions
-- As before, we start with the theoretical input and finish with some exercises
-- Questions?
-
---
-
 - Introducing `dplyr` and its verbs
-
---
 
 - `select()`: picks variables based on their names
 
---
-
 - `mutate()`: adds new variables that are functions of existing variables
 
---
-
 - `rename()` & `relocate()`
-
---
 
 - Exercises
 
@@ -62,35 +43,15 @@ library(kableExtra)
 
 ## Dplyr - A Grammar of Data Manipulation
 
-???
-
-- Layering has very much to do with the pipe. "And then" approach to data wrangling.
-- Btw: I don't properly cite the references but there's always an underlying hyperlink. So, you can just click on the word.
-- The following five functions are the most important ones
-- Again, we're looking at the first two in the first part and I will present "filter" and "summarise" in the second part. "Arrange" won't be part of the presentation as checking the help file is enough to understand how the function works.
-- Let's start with "select" then.
-
---
-
 - Grammar in this context means a framework which follows a (layered) approach to manipulate and transform your data in a structured manner (adapted from [this post](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149))
-
---
 
 -	In the words of the authors: "Set of verbs that help you solve the most common data manipulation challenges."
 
---
-
 - `select()`: picks variables based on their names.
-
---
 
 - `mutate()`: adds new variables that are functions of existing variables
 
---
-
 - `filter()`: picks cases based on their values.
-
---
 
 - ...
 
@@ -98,20 +59,11 @@ library(kableExtra)
 
 ## Select(): Subsetting columns
 
-???
-
-- Explain what the function does: Subsetting columns
-- This is the simplest form.
-
---
-
 ```{r}
 penguins %>% 
   head(n = 3) %>% 
   kable() %>% kable_styling(font_size = 14)
 ```
-
---
 
 ```{r}
 penguins %>% 
@@ -122,11 +74,6 @@ penguins %>%
 
 ---
 
-???
-
-- To make it less laborious we can also work with the colon to subset columns
-- Or, when we have columns with very long names for instance, we can also combine the colon and column positions to subset variables
-
 #### Subsetting by column names with `:` 
 
 ```{r}
@@ -135,8 +82,6 @@ penguins %>%
   head(n = 3) %>% 
   kable() %>% kable_styling(font_size = 10)
 ```
-
---
 
 #### Subsetting by column positions
 
@@ -148,14 +93,6 @@ penguins %>%
 ```
 
 ---
-
-???
-
-- If we don't want columns, there are two ways to do this:
-- We work with the exclamation mark
-- Or we work with the minus sign
-
---
 
 #### Subsetting by column positions with `!`
 
@@ -177,8 +114,6 @@ penguins %>%
   kable() %>% kable_styling(font_size = 10)
 ```
 
---
-
 ```{r}
 penguins %>% 
 select(-c(year, sex, species)) %>% #<<
@@ -186,22 +121,9 @@ select(-c(year, sex, species)) %>% #<<
   kable() %>% kable_styling(font_size = 10)
 ```
 
---
-
-### Questions?
-
 ---
 
-???
-
-- In the next few slides, we're going to look at so-called helper functions
-- Facilitate subsetting columns considerably, especially in larger dataset
-
---
-
 ## Useful helper functions
-
---
 
 - `starts_with()`
 
@@ -223,8 +145,6 @@ penguins %>%
   kable() %>% kable_styling(font_size = 12)
 ```
 
---
-
 - `contains()`
 
 ```{r}
@@ -245,8 +165,6 @@ penguins %>%
   kable() %>% kable_styling(font_size = 12)
 ```
 
---
-
 ```{r}
 penguins %>% 
   select(where(is.numeric)) %>% #<<
@@ -255,12 +173,6 @@ penguins %>%
 ```
 
 ---
-
-???
-
-Conveniently, combinations of helper functions are possible 
-
---
 
 ## Combinations are possible
 
@@ -277,16 +189,12 @@ penguins %>%
 
 ## Mutate(): Create and modify columns
 
---
-
 ```{r}
 penguins %>% 
   mutate(body_mass_kg = body_mass_g/1000, .keep = "used") %>%  #<<
   head(n = 3) %>% 
   kable() %>% kable_styling(font_size = 12)
 ```
-
---
 
 ```{r}
 penguins %>% 
@@ -308,8 +216,6 @@ penguins %>%
 ---
 
 ## `Rename()`: Change variable names 
-
---
 
 ```{r}
 penguins %>% 
@@ -366,40 +272,14 @@ penguins %>%
 
 ---
 
-class: center, middle
-
-<h3>
-Questions?
-</h3>
-
----
-
 ## Recap & outlook
-
---
 
 - Introduced to `dpylr`
 
---
-
 - `select()`: picks variables based on their names.
-
---
 
 - `mutate()`: adds new variables that are functions of existing variables
 
---
-
 - `rename()` & `relocate()`
 
---
-
 - Next up: `group_by()` and `summarise()`
-
----
-
-class: center, middle
-
-<h3>
-Time to exercise!
-</h3>

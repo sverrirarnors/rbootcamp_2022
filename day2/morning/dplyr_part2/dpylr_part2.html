@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Dplyr - Part II   </title>
+    <title>Dplyr - Part II</title>
     <meta charset="utf-8" />
     <meta name="author" content="Colin Walder" />
     <script src="dpylr_part2_files/header-attrs/header-attrs.js"></script>
@@ -13,9 +13,9 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Dplyr - Part II<br><br><br>
+# Dplyr - Part II
 ### Colin Walder
-### 11.09.2020
+### 15.09.2021
 
 ---
 
@@ -26,36 +26,19 @@ class: center, middle, inverse, title-slide
 
 ## Outline
 
---
-
 - Continue working with `dplyr`
-
---
 
 - `filter()`: subset rows using column values
 
---
-
 - `group_by()`: group by one or more variables
-
---
 
 - `summarise()`: summarise each group to fewer rows
 
---
-
 - Exercises
-
-???
-
-- Erster Bulletpoint
-- Zweiter Bulletpoint
 
 ---
 
 ## Filter(): Subset rows using column values
-
---
 
 - The following expressions are mostly used:
 
@@ -175,8 +158,6 @@ penguins %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
 #### Boolean operators
 
 
@@ -260,8 +241,6 @@ penguins %&gt;%
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
---
 
 - `xor()`
 
@@ -359,8 +338,6 @@ penguins %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
 - `between()`
 
 
@@ -408,52 +385,29 @@ penguins %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
-
 ---
 
 ## Quick recap
 
---
-
 - So far, we know how to ...
-
---
 
 - ... subset columns with `select()`
 
---
-
 - ... modify existing and create new columns with `mutate()`
-
---
 
 - ... rename columns with `rename()`
 
---
-
 - ... change the order of columns  with `relocate()`
-
---
 
 - ... subset rows with `filter()`
 
---
-
-- **Questions?**
-
---
-
-- How do we work with different groups in our datasets?
+- **How do we work with different groups in our datasets?**
 
 ---
 
 ## Group_by: Group by one or more variables
 
---
-
 - Examples of groups in the `Palmerpenguins` dataset:
-
---
 
 
 ```r
@@ -468,8 +422,6 @@ distinct(penguins, species)
 ## 2 Gentoo   
 ## 3 Chinstrap
 ```
-
---
 
 
 ```r
@@ -489,11 +441,7 @@ distinct(penguins, sex)
 
 - Group_by is a powerful function allowing operations per group (which is usually more interesting)
 
---
-
 - What is the average weigth of the penguins per year?
-
---
 
 
 ```r
@@ -532,8 +480,6 @@ distinct(penguins_weigth, weigth_avg) %&gt;%
 
 - What is the maximum bill length of the three different penguin species?
 
---
-
 
 ```r
 penguins_bill &lt;- penguins %&gt;% 
@@ -571,11 +517,7 @@ distinct(penguins_bill, bill_length) %&gt;%
 
 - You can also group by several groups
 
---
-
 - What is the maximum bill length of the three different penguin species on the three different islands?
-
---
 
 
 ```r
@@ -624,23 +566,15 @@ distinct(penguins_bill_island, bill_length_max) %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
 - There's a tidier way to obtain the same result
 
 ---
 
 ## Summarise(): Summarise each group to fewer rows
 
---
-
 - Let's look at the same examples again
 
---
-
 - What is the average weigth of the penguins per year?
-
---
 
 
 ```r
@@ -676,8 +610,6 @@ penguins %&gt;%
 ---
 
 - What is the maximum bill length of the three different penguin species on the three different islands?
-
---
 
 
 ```r
@@ -728,8 +660,6 @@ penguins %&gt;%
 
 - Again, combining different operations is possible
 
---
-
 
 ```r
 penguins %&gt;% 
@@ -773,47 +703,19 @@ penguins %&gt;%
 
 ---
 
-class: center, middle
-
-&lt;h3&gt;
-Questions?
-&lt;/h3&gt;
-
----
-
 ## Recap &amp; outlook
-
---
 
 - Introduced to `dpylr`
 
---
-
 - `mutate()`: adds new variables that are functions of existing variables
-
---
 
 - `select()`: picks variables based on their names.
 
---
-
 - `filter()`: picks cases based on their values.
-
---
 
 - `summarise()`: reduces multiple values down to a single summary.
 
---
-
 - Next up: Data visualisation with `ggplot2` and applying everything in a final exercise
-
----
-
-class: center, middle
-
-&lt;h3&gt;
-Time to exercise!
-&lt;/h3&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>

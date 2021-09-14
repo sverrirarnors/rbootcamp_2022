@@ -26,32 +26,13 @@ class: center, middle, inverse, title-slide
 
 ## Outline
 
-???
-
-- Learn how to work with the package dplyr and its most important functions, also called verbs
-- We're going to do this in 2 parts to ease the learning process
-- We'll be looking at fours functions, which are fairly self-explanatory
-- Present functions
-- As before, we start with the theoretical input and finish with some exercises
-- Questions?
-
---
-
 - Introducing `dplyr` and its verbs
-
---
 
 - `select()`: picks variables based on their names
 
---
-
 - `mutate()`: adds new variables that are functions of existing variables
 
---
-
 - `rename()` &amp; `relocate()`
-
---
 
 - Exercises
 
@@ -59,48 +40,21 @@ class: center, middle, inverse, title-slide
 
 ## Dplyr - A Grammar of Data Manipulation
 
-???
-
-- Layering has very much to do with the pipe. "And then" approach to data wrangling.
-- Btw: I don't properly cite the references but there's always an underlying hyperlink. So, you can just click on the word.
-- The following five functions are the most important ones
-- Again, we're looking at the first two in the first part and I will present "filter" and "summarise" in the second part. "Arrange" won't be part of the presentation as checking the help file is enough to understand how the function works.
-- Let's start with "select" then.
-
---
-
 - Grammar in this context means a framework which follows a (layered) approach to manipulate and transform your data in a structured manner (adapted from [this post](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149))
-
---
 
 -	In the words of the authors: "Set of verbs that help you solve the most common data manipulation challenges."
 
---
-
 - `select()`: picks variables based on their names.
-
---
 
 - `mutate()`: adds new variables that are functions of existing variables
 
---
-
 - `filter()`: picks cases based on their values.
-
---
 
 - ...
 
 ---
 
 ## Select(): Subsetting columns
-
-???
-
-- Explain what the function does: Subsetting columns
-- This is the simplest form.
-
---
 
 
 ```r
@@ -156,8 +110,6 @@ penguins %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
 
 ```r
 penguins %&gt;% 
@@ -195,11 +147,6 @@ penguins %&gt;%
 
 ---
 
-???
-
-- To make it less laborious we can also work with the colon to subset columns
-- Or, when we have columns with very long names for instance, we can also combine the colon and column positions to subset variables
-
 #### Subsetting by column names with `:` 
 
 
@@ -236,8 +183,6 @@ penguins %&gt;%
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
---
 
 #### Subsetting by column positions
 
@@ -277,14 +222,6 @@ penguins %&gt;%
 &lt;/table&gt;
 
 ---
-
-???
-
-- If we don't want columns, there are two ways to do this:
-- We work with the exclamation mark
-- Or we work with the minus sign
-
---
 
 #### Subsetting by column positions with `!`
 
@@ -368,8 +305,6 @@ penguins %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
 
 ```r
 penguins %&gt;% 
@@ -399,22 +334,9 @@ penguins %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
-### Questions?
-
 ---
 
-???
-
-- In the next few slides, we're going to look at so-called helper functions
-- Facilitate subsetting columns considerably, especially in larger dataset
-
---
-
 ## Useful helper functions
-
---
 
 - `starts_with()`
 
@@ -479,8 +401,6 @@ penguins %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
 - `contains()`
 
 
@@ -544,8 +464,6 @@ penguins %&gt;%
 &lt;/tbody&gt;
 &lt;/table&gt;
 
---
-
 
 ```r
 penguins %&gt;% 
@@ -583,12 +501,6 @@ penguins %&gt;%
 &lt;/table&gt;
 
 ---
-
-???
-
-Conveniently, combinations of helper functions are possible 
-
---
 
 ## Combinations are possible
 
@@ -631,8 +543,6 @@ penguins %&gt;%
 
 ## Mutate(): Create and modify columns
 
---
-
 
 ```r
 penguins %&gt;% 
@@ -663,8 +573,6 @@ penguins %&gt;%
   &lt;/tr&gt;
 &lt;/tbody&gt;
 &lt;/table&gt;
-
---
 
 
 ```r
@@ -736,8 +644,6 @@ penguins %&gt;%
 ---
 
 ## `Rename()`: Change variable names 
-
---
 
 
 ```r
@@ -950,43 +856,17 @@ penguins %&gt;%
 
 ---
 
-class: center, middle
-
-&lt;h3&gt;
-Questions?
-&lt;/h3&gt;
-
----
-
 ## Recap &amp; outlook
-
---
 
 - Introduced to `dpylr`
 
---
-
 - `select()`: picks variables based on their names.
-
---
 
 - `mutate()`: adds new variables that are functions of existing variables
 
---
-
 - `rename()` &amp; `relocate()`
 
---
-
 - Next up: `group_by()` and `summarise()`
-
----
-
-class: center, middle
-
-&lt;h3&gt;
-Time to exercise!
-&lt;/h3&gt;
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
