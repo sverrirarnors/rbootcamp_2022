@@ -1,8 +1,5 @@
 ---
 title: "Introduction to the Tidyverse"
-author: 
-  - "Colin Walder"
-date: "15.09.2021"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css

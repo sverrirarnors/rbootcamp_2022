@@ -13,9 +13,15 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
+.title[
 # Dplyr - Part II
+]
+.author[
 ### Colin Walder
+]
+.date[
 ### 15.09.2021
+]
 
 ---
 
@@ -415,7 +421,7 @@ distinct(penguins, species)
 ```
 
 ```
-## # A tibble: 3 x 1
+## # A tibble: 3 × 1
 ##   species  
 ##   &lt;fct&gt;    
 ## 1 Adelie   
@@ -429,7 +435,7 @@ distinct(penguins, sex)
 ```
 
 ```
-## # A tibble: 3 x 1
+## # A tibble: 3 × 1
 ##   sex   
 ##   &lt;fct&gt; 
 ## 1 male  
@@ -763,6 +769,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

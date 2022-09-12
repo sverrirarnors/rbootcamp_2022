@@ -1,7 +1,5 @@
 ---
 title: "Dplyr - Part II"
-author: "Colin Walder"
-date: "15.09.2021"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css

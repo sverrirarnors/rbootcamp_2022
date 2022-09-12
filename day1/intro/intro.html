@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="" xml:lang="">
   <head>
-    <title>Welcome to the R Bootcamp 2021!</title>
+    <title>Welcome to the R Bootcamp 2022!</title>
     <meta charset="utf-8" />
     <script src="intro_files/header-attrs/header-attrs.js"></script>
     <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
@@ -10,7 +10,9 @@
     <textarea id="source">
 class: center, middle, inverse, title-slide
 
-# Welcome to the R Bootcamp 2021!
+.title[
+# Welcome to the R Bootcamp 2022!
+]
 
 ---
 
@@ -36,9 +38,7 @@ class: center, middle, inverse, title-slide
 
 ## First things first
 
-- Please (properly) wear masks at all time
-
-- The lessons are fairly packed but don't worry: Everything is available [online](https://github.com/bonschorno/rbootcamp_2021)
+- The lessons are fairly packed but don't worry: Everything is available [online](https://github.com/sverrirarnors/rbootcamp_2022)
 
 - Feel free to ask questions at any time
 
@@ -52,8 +52,6 @@ class: center, middle, inverse, title-slide
 
 - Don't hesitate to share the slides and exercises as well
 
-- Thanks to GessWho! for organizing the social events
-
 ---
 
 class: inverse, center, middle
@@ -66,7 +64,7 @@ class: inverse, center, middle
 
 
 
-&lt;img src="intro_files/figure-html/unnamed-chunk-2-1.png" width="720" /&gt;
+&lt;img src="intro_files/figure-html/unnamed-chunk-2-1.png" width="1008" /&gt;
 
 ---
 
@@ -118,6 +116,26 @@ class: inverse, center, middle
 - What tasks are you performing?
 
 ---
+
+# R or Python?
+
+--
+- R is better at
+  - Creating graphics and visualizations
+  - Working with statistical models and tests
+  - Presenting data
+--
+- Python is better at
+  - Non-statistical tasks such as web scraping, deep learning
+--
+- R can run Python code (using [reticulate](https://rstudio.github.io/reticulate/))
+--
+In your core courses you will be working with simple statistical models → R will be better!
+--
+
+.footnote[https://www.coursera.org/articles/python-or-r-for-data-analysis]
+
+---
 # Why R?
 
 R is a programming language built for statistical computing.
@@ -150,7 +168,7 @@ If one already knows Stata or similar software, why use R?
 
 # R Studio
 
-R Studio is a "front-end" or integrated development environment (IDE) for R that can make your life *easier*.
+R Studio is a integrated development environment (IDE) for R that can make your life *easier*.
 
 --
 
@@ -170,6 +188,10 @@ RStudio can:
 --
 
 * [Enable easy integration of R code into documents.](https://rmarkdown.rstudio.com/)
+
+--
+
+If you are very stubborn, you can use other editors, but I have always come back to R Studio
 
 ---
 # Getting Started
@@ -302,7 +324,7 @@ setwd()
 2. Creates a hidden directory (named .Rproj.user) where project-specific temporary files are stored. 
 3. Loads the project into RStudio and display its name in the Projects toolbar 
 
-This is super useful when collaborating on different operating systems!
+This is super useful when collaborating on different operating systems! 
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
@@ -350,6 +372,19 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
     deleted = true;
   });
 })();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
 (function() {
   "use strict"
   // Replace <script> tags in slides area to make them executable

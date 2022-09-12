@@ -1,5 +1,5 @@
 ---
-title: "Welcome to the R Bootcamp 2021!"
+title: "Welcome to the R Bootcamp 2022!"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -38,9 +38,7 @@ library(tidyverse)
 
 ## First things first
 
-- Please (properly) wear masks at all time
-
-- The lessons are fairly packed but don't worry: Everything is available [online](https://github.com/bonschorno/rbootcamp_2021)
+- The lessons are fairly packed but don't worry: Everything is available [online](https://github.com/sverrirarnors/rbootcamp_2022)
 
 - Feel free to ask questions at any time
 
@@ -54,8 +52,6 @@ library(tidyverse)
 
 - Don't hesitate to share the slides and exercises as well
 
-- Thanks to GessWho! for organizing the social events
-
 ---
 
 class: inverse, center, middle
@@ -67,8 +63,8 @@ class: inverse, center, middle
 ## Any experience with R?
 
 ```{r, include=FALSE}
-n <- c(12, 5, 13, 2)
-names(n) <- c("No", "Yes, on my own", "Yes, during undergrad", "Yes, for work")
+n <- c(12, 3, 3, 1)
+names(n) <- c("No", "Yes, on my own", "Yes, I have been taught\nhow to use it previously", "Yes, for work")
 
 plot_experience <- bind_rows(n) %>% 
   pivot_longer(everything(), names_to = "experience", values_to = "value") %>%
@@ -82,7 +78,7 @@ plot_experience <- bind_rows(n) %>%
         axis.ticks.x = element_blank())
 ```
 
-```{r, echo=FALSE, fig.width=10}
+```{r, echo=FALSE, fig.width=14}
 plot_experience
 ```
 
@@ -91,8 +87,8 @@ plot_experience
 ## Any experience with other languages?
 
 ```{r, echo=FALSE}
-languages <- c(3, 10, 7,8, 3)
-names(languages) <- c("Stata", "Python", "Matlab", "SPSS", "Multiple")
+languages <- c(5, 9, 2, 1, 4)
+names(languages) <- c("Stata", "Python", "Matlab", "SPSS", "Other")
 
 plot_languages <- bind_rows(languages) %>% 
   pivot_longer(everything(), names_to = "experience", values_to = "value") %>%
@@ -120,7 +116,7 @@ library(treemapify)
  
 # Create data
 group <- c("STP","MACIS")
-value <- c(13,15)
+value <- c(9, 10)
 data <- data.frame(group,value)
  
 # treemap
@@ -130,10 +126,10 @@ aes(area = value, fill = group,label = group)) +
    geom_treemap_text(
      colour = "white",
      place = "centre",
-     size = 15) +
+     size = 30) +
   theme_xaringan() +
   labs(fill = "") +
-  scale_fill_brewer(palette = "Reds") +
+  scale_fill_brewer(type= "qual", palette = "Accent") +
   theme(legend.position = "none")
 ```
 
@@ -173,6 +169,26 @@ class: inverse, center, middle
 - What tasks are you performing?
 
 ---
+
+# R or Python?
+
+--
+- R is better at
+  - Creating graphics and visualizations
+  - Working with statistical models and tests
+  - Presenting data
+--
+- Python is better at
+  - Non-statistical tasks such as web scraping, deep learning
+--
+- R can run Python code (using [reticulate](https://rstudio.github.io/reticulate/))
+--
+In your core courses you will be working with simple statistical models → R will be better!
+--
+
+.footnote[https://www.coursera.org/articles/python-or-r-for-data-analysis]
+
+---
 # Why R?
 
 R is a programming language built for statistical computing.
@@ -205,7 +221,7 @@ If one already knows Stata or similar software, why use R?
 
 # R Studio
 
-R Studio is a "front-end" or integrated development environment (IDE) for R that can make your life *easier*.
+R Studio is a integrated development environment (IDE) for R that can make your life *easier*.
 
 --
 
@@ -225,6 +241,10 @@ RStudio can:
 --
 
 * [Enable easy integration of R code into documents.](https://rmarkdown.rstudio.com/)
+
+--
+
+If you are very stubborn, you can use other editors, but I have always come back to R Studio
 
 ---
 # Getting Started
@@ -343,4 +363,4 @@ setwd()
 2. Creates a hidden directory (named .Rproj.user) where project-specific temporary files are stored. 
 3. Loads the project into RStudio and display its name in the Projects toolbar 
 
-This is super useful when collaborating on different operating systems!
+This is super useful when collaborating on different operating systems! 

@@ -1,4 +1,4 @@
-## Hi and welcome to the R Bootcamp 2021 (MACIS & ISTP)!
+## Hi and welcome to the R Bootcamp 2022 (MACIS & ISTP)!
 
 This repository contains the slides, exercises, and the corresponding solutions of the R Bootcamp 2021. The boot camp is structured as a 1.5-day course for incoming students of the Master in Comparative and International Studies (see [MACIS](https://macis.gess.ethz.ch)) and the Master in Science, Technology, and Policy (see [MSc ETH STP](https://istp.ethz.ch/education/master.html)), respectively. In the spirit of reproducibility and the open-source movement, we make this repository publicly available to all those who want to acquire basic knowledge of R themselves or teach it to others as instructors.
 
@@ -6,17 +6,9 @@ Feedback form: [here](https://forms.gle/9ed6YKQ1qv9TGTw87)
 
 ### Dates
 
-14.09.21: 10:00-15:45
+13.09.21: 10:00-15:45
 
-15.09.21: 09:15-16:15
-
-### Instructors
-
-`Base R`: [Felix](mailto:fwuethrich@student.ethz.ch)
-
-`Tidyverse/dplyr`: [Colin](mailto:colin.walder@ir.gess.ethz.ch)
-
-`ggplot2`: [Andreas](mailto:andreas.felderer@gess.ethz.ch)
+14.09.21: 09:15-16:15
 
 ## Schedule
 

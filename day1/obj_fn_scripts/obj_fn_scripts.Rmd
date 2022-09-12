@@ -1,7 +1,5 @@
 ---
 title: "Objects, dataframes, formats"
-author: "Felix Wüthrich"
-date: "14.09.2021"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -41,9 +39,9 @@ new.object <- 144
 --
 
 **Operators** like `<-` are functions that look like symbols but typically sit between their arguments 
-(e.g. numbers or objects) instead of having them inside `()` like in `sqrt(x)`<sup>1</sup>. 
+(e.g. numbers or objects) instead of having them inside `()` like in `sqrt(x)`. 
 
-Technically, you can also use `=` as an assignment operator (like in Python). However, this is only possible at the top level.
+Technically, you can also use `=` as an assignment operator (like in Python). However, `=` only works within the same scope.
 
 ---
 
@@ -66,8 +64,6 @@ x
 ```
 
 So, stick to `<-` when working in R. 
-
-
 ---
 
 # Calling Objects
@@ -86,7 +82,7 @@ than vague ones*!
 
 Put differently:
 
-<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">I promise you that the number of characters you save by randomly removing letters from variable names is far fewer than the number of characters you’ll type in vain misremembering those abbreviations</p>&mdash; Emily Riederer (@EmilyRiederer) <a href="https://twitter.com/EmilyRiederer/status/1432800401460453381?ref_src=twsrc%5Etfw">August 31, 2021</a></blockquote>
+<blockquote class="twitter-tweet" data-width="550" data-lang="en" data-dnt="true" data-theme="light"><p lang="en" dir="ltr">I promise you that the number of characters you save by randomly removing letters from variable names is far fewer than the number of characters you’ll type in vain mis-remembering those abbreviations</p>&mdash; Emily Riederer (@EmilyRiederer) <a href="https://twitter.com/EmilyRiederer/status/1432800401460453381?ref_src=twsrc%5Etfw">August 31, 2021</a></blockquote>
 
 ---
 
@@ -169,6 +165,8 @@ You can open saved files in R as well:
 load("new_object.RData")
 ```
 
+--
+If you are only working within R, `.RData` is a great way of working with data, highly recommend. It uses compression (once reduced a 16 GB file to 2 GB) and removes the need to use packages to import data. 
 ---
 
 # More Complex Objects
@@ -217,7 +215,7 @@ Working with **Stata**, **SPSS**, or **SAS** users? You can use a **package** to
     + Keeps metadata like variable labels
 
 
-For less common formats, Google it. I've yet to encounter a data format without an 
+In general, use `haven`. For less common formats, Google it. I've yet to encounter a data format without an 
 R package to handle it (or at least a clever hack).
 
 If you encounter an ambiguous file extension (e.g. `.dat`), try opening it with

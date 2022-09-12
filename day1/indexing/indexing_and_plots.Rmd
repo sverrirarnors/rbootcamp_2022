@@ -1,7 +1,5 @@
 ---
 title: "Indexing and basic plots"
-author: "Felix Wüthrich"
-date: "14.09.2021"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
@@ -41,11 +39,11 @@ gapminder[,1] # First column
 ---
 
 ```{r}
-gapminder[c(1,2,3,4,5), c(3,4)] # First five rows, third and fourth column
+gapminder[c(1,2,3,4,5), c(3,4)] # First five rows, 3rd and 4th col
 ```
 
 ```{r}
-gapminder[1:5, 3:4] # First five rows, third and fourth column
+gapminder[1:5, 3:4] # First five rows, 3rd and 4th column
 ```
 
 
@@ -259,9 +257,11 @@ Note we can omit explicitly typing function arguments like `test = ` if we enter
 
 .small[
 ```{r}
-yugoslavia$short_country <-  ifelse(yugoslavia$country == "Bosnia and Herzegovina",
-                                    "B and H",
-                                    as.character(yugoslavia$country))
+yugoslavia$short_country <- 
+  ifelse(
+    yugoslavia$country == "Bosnia and Herzegovina","B and H",
+    as.character(yugoslavia$country))
+
 yugoslavia[yugoslavia$year==1952, c(1,9)] # Selecting just columns 1 and 9
 ```
 ]
